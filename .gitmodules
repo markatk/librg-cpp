@@ -1,9 +1,9 @@
 [submodule "thirdparty/librg"]
 	path = thirdparty/librg
-	url = https://github.com/librg/librg
+	url = https://github.com/librg/librg.git
 [submodule "thirdparty/enet_librg"]
 	path = thirdparty/enet_librg
-	url = git@github.com:zpl-c/enet.git
+	url = https://github.com/zpl-c/enet.git
 [submodule "thirdparty/zpl_librg"]
 	path = thirdparty/zpl_librg
-	url = https://github.com/zpl-c/zpl
+	url = https://github.com/zpl-c/zpl.git
