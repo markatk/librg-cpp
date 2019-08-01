@@ -1,4 +1,4 @@
-set(SOURCES librg-cpp.cpp)
+set(SOURCES librg-cpp.cpp context.cpp)
 
 configure_file(${CMAKE_SOURCE_DIR}/include/librg-cpp/version.h.in version.h)
 
@@ -9,4 +9,4 @@ target_include_directories(librg_cpp PRIVATE ${CMAKE_BINARY_DIR})
 
 target_include_directories(librg_cpp INTERFACE ${CMAKE_SOURCE_DIR}/include)
 
-target_link_libraries(librg_cpp PRIVATE librg_static)
+target_link_libraries(librg_cpp PUBLIC librg_static)
