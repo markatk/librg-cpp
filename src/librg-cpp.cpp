@@ -1,5 +1,5 @@
 /*
- * File: client.cpp
+ * File: librg-cpp.cpp
  * Author: MarkAtk
  * Date: 01.08.2019
  *
@@ -18,12 +18,4 @@
  * limitations under the License.
  */
 
-#include <iostream>
-
-#include <librg-cpp/librg-cpp.h>
-
-int main(int argc, char **argv) {
-    std::cout << "Hello client" << std::endl;
-
-    return 0;
-}
+#include "librg-cpp.h"

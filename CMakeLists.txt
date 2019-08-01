@@ -4,7 +4,7 @@ if(NOT BUILD_VERSION)
     set(BUILD_VERSION 0.1.0)
 endif()
 
-project(librg_cpp VERSION ${BUILD_VERSION})
+project(LIBRG_CPP VERSION ${BUILD_VERSION})
 
 # Build options
 option(BUILD_TESTS "Build the library tests" ON)
