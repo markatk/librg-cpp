@@ -1,0 +1,13 @@
+dist: bionic
+language: cpp
+compiler:
+  - gcc
+  - clang
+os:
+  - linux
+  - osx
+
+script:
+  - mkdir build && cd build
+  - cmake ..
+  - make && make test
