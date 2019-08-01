@@ -23,7 +23,15 @@
 #include <librg-cpp/librg-cpp.h>
 
 int main(int argc, char **argv) {
-    std::cout << "Hello server" << std::endl;
+    librg_cpp::Context context(true, 64, 32);
 
-    return 0;
+    if (context.initialize()) {
+        std::cerr << "Unable to initialize librg context" << std::endl;
+
+        return EXIT_FAILURE;
+    }
+
+    context.deinitialize();
+
+    return EXIT_SUCCESS;
 }
