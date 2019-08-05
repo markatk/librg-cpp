@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: host.cpp
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 05.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -18,13 +18,24 @@
  * limitations under the License.
  */
 
-#pragma once
+#include "host.h"
 
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
-
-#include "version.h"
-#include "result.h"
 #include "context.h"
-#include "server.h"
-#include "client.h"
+
+librg_cpp::Host::Host(std::shared_ptr<Context> context) {
+    _context = std::move(context);
+    _address.host = _host;
+    _host[0] = '\0';
+}
+
+void librg_cpp::Host::tick() {
+    librg_tick(context());
+}
+
+bool librg_cpp::Host::isConnected() const {
+    return librg_is_connected(context()) != 0;
+}
+
+librg_ctx *librg_cpp::Host::context() const {
+    return &_context->_context;
+}

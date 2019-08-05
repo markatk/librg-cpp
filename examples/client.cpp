@@ -23,7 +23,30 @@
 #include <librg-cpp/librg-cpp.h>
 
 int main(int argc, char **argv) {
-    std::cout << "Hello client" << std::endl;
+    std::cout << "librg-cpp client example " << LIBRG_CPP_VERSION << std::endl;
 
-    return 0;
+    auto context = std::make_shared<librg_cpp::Context>(false, 64);
+    if (context->initialize() != LIBRG_CPP_NO_ERROR) {
+        std::cerr << "Unable to initialize librg context" << std::endl;
+
+        return EXIT_FAILURE;
+    }
+
+    librg_cpp::Client client(context);
+
+    if (client.connect("::1", 12345) != LIBRG_CPP_NO_ERROR) {
+        std::cerr << "Unable to connect to server" << std::endl;
+
+        return EXIT_FAILURE;
+    }
+
+    while (client.isConnected()) {
+        client.tick();
+    }
+
+    // clean up
+    client.disconnect();
+    context->deinitialize();
+
+    return EXIT_SUCCESS;
 }

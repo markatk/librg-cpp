@@ -47,6 +47,6 @@ namespace librg_cpp {
 
         void reset();
 
-        friend class Server;
+        friend class Host;
     };
 }

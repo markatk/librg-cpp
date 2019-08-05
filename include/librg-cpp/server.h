@@ -20,36 +20,22 @@
 
 #pragma once
 
+#include "host.h"
+
 #include <string>
-#include <memory>
-#include <librg.h>
 
 namespace librg_cpp {
-    const unsigned int MAX_HOST_LENGTH = 64;
-
-    class Context;
-
-    class Server {
-    private:
-        std::shared_ptr<Context> _context;
-        librg_address _address;
-        char _host[MAX_HOST_LENGTH + 1];
-
+    class Server : public Host {
     public:
         Server(std::shared_ptr<Context> context, int port, const std::string &host = "::1");
-        virtual ~Server();
+        ~Server() override;
 
         int start();
         void stop();
-        [[nodiscard]] bool isStarted() const;
-        void tick();
 
         void setPort(int port);
         void setHost(const std::string &host);
         [[nodiscard]] int port() const;
         [[nodiscard]] std::string host() const;
-
-    private:
-        [[nodiscard]] librg_ctx *context() const;
     };
 }

@@ -23,7 +23,7 @@
 #include <librg-cpp/librg-cpp.h>
 
 int main(int argc, char **argv) {
-    std::cout << "librg-cpp example " << LIBRG_CPP_VERSION << std::endl;
+    std::cout << "librg-cpp server example " << LIBRG_CPP_VERSION << std::endl;
 
     auto context = std::make_shared<librg_cpp::Context>(true, 64, 32);
     if (context->initialize() != LIBRG_CPP_NO_ERROR) {
@@ -40,7 +40,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    while (server.isStarted()) {
+    while (server.isConnected()) {
         server.tick();
     }
 

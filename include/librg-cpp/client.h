@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: client.h
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 05.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -20,11 +20,17 @@
 
 #pragma once
 
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
+#include "host.h"
 
-#include "version.h"
-#include "result.h"
-#include "context.h"
-#include "server.h"
-#include "client.h"
+#include <string>
+
+namespace librg_cpp {
+    class Client : public Host {
+    public:
+        explicit Client(std::shared_ptr<Context> context);
+        ~Client() override;
+
+        int connect(const std::string &host, int port);
+        void disconnect();
+    };
+}

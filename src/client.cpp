@@ -1,7 +1,7 @@
 /*
- * File: server.cpp
+ * File: client.cpp
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 05.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -18,20 +18,20 @@
  * limitations under the License.
  */
 
-#include "server.h"
+#include "client.h"
 
 #include "context.h"
+#include "result.h"
 
-librg_cpp::Server::Server(std::shared_ptr<Context> context, int port, const std::string &host) : librg_cpp::Host(std::move(context)) {
-    setPort(port);
-    setHost(host);
+librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
+
 }
 
-librg_cpp::Server::~Server() {
-    stop();
+librg_cpp::Client::~Client() {
+    disconnect();
 }
 
-int librg_cpp::Server::start() {
+int librg_cpp::Client::connect(const std::string &host, int port) {
     if (_context->isInitialized() == false) {
         return -1;
     }
@@ -40,29 +40,16 @@ int librg_cpp::Server::start() {
         return -1;
     }
 
+    _address.port = port;
+    strcpy_s(_address.host, MAX_HOST_LENGTH, host.c_str());
+
     return librg_network_start(context(), _address);
 }
 
-void librg_cpp::Server::stop() {
+void librg_cpp::Client::disconnect() {
     if (isConnected() == false) {
         return;
     }
 
     librg_network_stop(context());
-}
-
-void librg_cpp::Server::setPort(int port) {
-    _address.port = port;
-}
-
-void librg_cpp::Server::setHost(const std::string &host) {
-    strcpy_s(_host, MAX_HOST_LENGTH + 1, host.c_str());
-}
-
-int librg_cpp::Server::port() const {
-    return _address.port;
-}
-
-std::string librg_cpp::Server::host() const {
-    return std::string(_address.host);
 }
