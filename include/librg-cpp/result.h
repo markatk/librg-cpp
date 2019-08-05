@@ -1,5 +1,5 @@
 /*
- * File: librg-cpp.h
+ * File: result.h
  * Author: MarkAtk
  * Date: 01.08.2019
  *
@@ -20,10 +20,4 @@
 
 #pragma once
 
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
-
-#include "version.h"
-#include "result.h"
-#include "context.h"
-#include "server.h"
+#define LIBRG_CPP_NO_ERROR 0

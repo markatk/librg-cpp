@@ -46,5 +46,7 @@ namespace librg_cpp {
         [[nodiscard]] unsigned short maxEntities() const;
 
         void reset();
+
+        friend class Server;
     };
 }

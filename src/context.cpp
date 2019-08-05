@@ -20,6 +20,8 @@
 
 #include "context.h"
 
+#include "result.h"
+
 librg_cpp::Context::Context(bool isServer, double tickDelay, unsigned short maxClients) : _context({0}) {
     _initialized = false;
 
@@ -39,7 +41,13 @@ int librg_cpp::Context::initialize() {
         return -1;
     }
 
-    return librg_init(&_context);
+    if (librg_init(&_context) != 0) {
+        return -1;
+    }
+
+    _initialized = true;
+
+    return LIBRG_CPP_NO_ERROR;
 }
 
 void librg_cpp::Context::deinitialize() {
@@ -48,6 +56,8 @@ void librg_cpp::Context::deinitialize() {
     }
 
     librg_free(&_context);
+
+    _initialized = false;
 }
 
 bool librg_cpp::Context::isInitialized() const {

@@ -23,15 +23,30 @@
 #include <librg-cpp/librg-cpp.h>
 
 int main(int argc, char **argv) {
-    librg_cpp::Context context(true, 64, 32);
+    std::cout << "librg-cpp example " << LIBRG_CPP_VERSION << std::endl;
 
-    if (context.initialize()) {
+    auto context = std::make_shared<librg_cpp::Context>(true, 64, 32);
+    if (context->initialize() != LIBRG_CPP_NO_ERROR) {
         std::cerr << "Unable to initialize librg context" << std::endl;
 
         return EXIT_FAILURE;
     }
 
-    context.deinitialize();
+    librg_cpp::Server server(context, 12345);
+
+    if (server.start() != LIBRG_CPP_NO_ERROR) {
+        std::cerr << "Unable to start server" << std::endl;
+
+        return EXIT_FAILURE;
+    }
+
+    while (server.isStarted()) {
+        server.tick();
+    }
+
+    // clean up
+    server.stop();
+    context->deinitialize();
 
     return EXIT_SUCCESS;
 }
