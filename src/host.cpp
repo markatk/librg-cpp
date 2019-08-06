@@ -22,10 +22,47 @@
 
 #include "context.h"
 
+#include <cassert>
+#include <utility>
+
 librg_cpp::Host::Host(std::shared_ptr<Context> context) {
+    assert(context != nullptr);
+
     _context = std::move(context);
     _address.host = _host;
     _host[0] = '\0';
+
+    _context->setUserData(this);
+
+    // register all events
+    librg_event_add(this->context(), LIBRG_CONNECTION_INIT, onEvent);
+    librg_event_add(this->context(), LIBRG_CONNECTION_REQUEST, onEvent);
+    librg_event_add(this->context(), LIBRG_CONNECTION_REFUSE, onEvent);
+    librg_event_add(this->context(), LIBRG_CONNECTION_ACCEPT, onEvent);
+    librg_event_add(this->context(), LIBRG_CONNECTION_DISCONNECT, onEvent);
+    librg_event_add(this->context(), LIBRG_CONNECTION_TIMEOUT, onEvent);
+    librg_event_add(this->context(), LIBRG_CONNECTION_TIMESYNC, onEvent);
+    librg_event_add(this->context(), LIBRG_ENTITY_CREATE, onEvent);
+    librg_event_add(this->context(), LIBRG_ENTITY_UPDATE, onEvent);
+    librg_event_add(this->context(), LIBRG_ENTITY_REMOVE, onEvent);
+    librg_event_add(this->context(), LIBRG_CLIENT_STREAMER_ADD, onEvent);
+    librg_event_add(this->context(), LIBRG_CLIENT_STREAMER_REMOVE, onEvent);
+    librg_event_add(this->context(), LIBRG_CLIENT_STREAMER_UPDATE, onEvent);
+
+    // register own methods as callbacks
+    registerEvent(LIBRG_CONNECTION_INIT, [this](librg_event *event) { onConnectionInitialize(event); });
+    registerEvent(LIBRG_CONNECTION_REQUEST, [this](librg_event *event) { onConnectionRequest(event); });
+    registerEvent(LIBRG_CONNECTION_REFUSE, [this](librg_event *event) { onConnectionRefuse(event); });
+    registerEvent(LIBRG_CONNECTION_ACCEPT, [this](librg_event *event) { onConnectionAccept(event); });
+    registerEvent(LIBRG_CONNECTION_DISCONNECT, [this](librg_event *event) { onConnectionDisconnect(event); });
+    registerEvent(LIBRG_CONNECTION_TIMEOUT, [this](librg_event *event) { onConnectionTimeout(event); });
+    registerEvent(LIBRG_CONNECTION_TIMESYNC, [this](librg_event *event) { onConnectionTimeSync(event); });
+    registerEvent(LIBRG_ENTITY_CREATE, [this](librg_event *event) { onEntityCreate(event); });
+    registerEvent(LIBRG_ENTITY_UPDATE, [this](librg_event *event) { onEntityUpdate(event); });
+    registerEvent(LIBRG_ENTITY_REMOVE, [this](librg_event *event) { onEntityRemove(event); });
+    registerEvent(LIBRG_CLIENT_STREAMER_ADD, [this](librg_event *event) { onClientStreamerAdd(event); });
+    registerEvent(LIBRG_CLIENT_STREAMER_REMOVE, [this](librg_event *event) { onClientStreamerRemove(event); });
+    registerEvent(LIBRG_CLIENT_STREAMER_UPDATE, [this](librg_event *event) { onClientStreamerUpdate(event); });
 }
 
 void librg_cpp::Host::tick() {
@@ -36,6 +73,78 @@ bool librg_cpp::Host::isConnected() const {
     return librg_is_connected(context()) != 0;
 }
 
+void librg_cpp::Host::onConnectionInitialize(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onConnectionRequest(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onConnectionRefuse(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onConnectionAccept(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onConnectionDisconnect(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onConnectionTimeout(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onConnectionTimeSync(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onEntityCreate(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onEntityUpdate(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onEntityRemove(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onClientStreamerAdd(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onClientStreamerRemove(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::onClientStreamerUpdate(librg_event *event) {
+    // Do nothing by default
+}
+
+void librg_cpp::Host::registerEvent(int id, std::function<void(librg_event *)> callback) {
+    assert(id >= 0);
+
+    _eventCallbacks[id] = std::move(callback);
+}
+
 librg_ctx *librg_cpp::Host::context() const {
+    assert(_context != nullptr);
+
     return &_context->_context;
+}
+
+void librg_cpp::Host::onEvent(librg_event *event) {
+    auto host = reinterpret_cast<Host *>(event->ctx->user_data);
+    assert(host != nullptr);
+
+    auto callback = host->_eventCallbacks[event->id];
+    if (callback == nullptr) {
+        return;
+    }
+
+    callback(event);
 }

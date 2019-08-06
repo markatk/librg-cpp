@@ -22,6 +22,20 @@
 
 #include <librg-cpp/librg-cpp.h>
 
+class Server : public librg_cpp::Server {
+public:
+    explicit Server(std::shared_ptr<librg_cpp::Context> context) : librg_cpp::Server(std::move(context), 12345) {
+
+    }
+
+    ~Server() override = default;
+
+protected:
+    void onConnectionRequest(librg_event *event) override {
+        std::cout << "Connection requested" << std::endl;
+    }
+};
+
 int main(int argc, char **argv) {
     std::cout << "librg-cpp server example " << LIBRG_CPP_VERSION << std::endl;
 
@@ -32,7 +46,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    librg_cpp::Server server(context, 12345);
+    Server server(context);
 
     if (server.start() != LIBRG_CPP_NO_ERROR) {
         std::cerr << "Unable to start server" << std::endl;
@@ -40,7 +54,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    while (server.isConnected()) {
+    while (true) {
         server.tick();
     }
 

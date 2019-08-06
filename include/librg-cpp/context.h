@@ -47,6 +47,10 @@ namespace librg_cpp {
 
         void reset();
 
+    private:
+        void setUserData(void *ptr);
+        [[nodiscard]] void *userData() const;
+
         friend class Host;
     };
 }

@@ -22,6 +22,8 @@
 
 #include <memory>
 #include <librg.h>
+#include <functional>
+#include <map>
 
 namespace librg_cpp {
     const unsigned int MAX_HOST_LENGTH = 64;
@@ -34,6 +36,9 @@ namespace librg_cpp {
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
 
+        // TODO: Wrap event with class
+        std::map<int, std::function<void(librg_event *)>> _eventCallbacks;
+
     public:
         explicit Host(std::shared_ptr<Context> context);
         virtual ~Host() = default;
@@ -43,6 +48,25 @@ namespace librg_cpp {
         [[nodiscard]] bool isConnected() const;
 
     protected:
+        virtual void onConnectionInitialize(librg_event *event);
+        virtual void onConnectionRequest(librg_event *event);
+        virtual void onConnectionRefuse(librg_event *event);
+        virtual void onConnectionAccept(librg_event *event);
+        virtual void onConnectionDisconnect(librg_event *event);
+        virtual void onConnectionTimeout(librg_event *event);
+        virtual void onConnectionTimeSync(librg_event *event);
+        virtual void onEntityCreate(librg_event *event);
+        virtual void onEntityUpdate(librg_event *event);
+        virtual void onEntityRemove(librg_event *event);
+        virtual void onClientStreamerAdd(librg_event *event);
+        virtual void onClientStreamerRemove(librg_event *event);
+        virtual void onClientStreamerUpdate(librg_event *event);
+
+        void registerEvent(int id, std::function<void(librg_event *)> callback);
+
         [[nodiscard]] librg_ctx *context() const;
+
+    private:
+        static void onEvent(librg_event *event);
     };
 }
