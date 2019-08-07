@@ -21,7 +21,6 @@
 #include "client.h"
 
 #include "context.h"
-#include "result.h"
 
 librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
 

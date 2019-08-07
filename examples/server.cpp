@@ -34,6 +34,18 @@ protected:
     void onConnectionRequest(librg_event *event) override {
         std::cout << "Connection requested" << std::endl;
     }
+
+    void onConnectionAccept(librg_event *event) override {
+        std::cout << "Connection accepted" << std::endl;
+    }
+
+    void onConnectionDisconnect(librg_event *event) override {
+        std::cout << "Disconnected" << std::endl;
+    }
+
+    void onConnectionTimeout(librg_event *event) override {
+        std::cout << "Timeout" << std::endl;
+    }
 };
 
 int main(int argc, char **argv) {

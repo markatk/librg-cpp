@@ -22,6 +22,43 @@
 
 #include <librg-cpp/librg-cpp.h>
 
+class Client : public librg_cpp::Client {
+private:
+    bool _shutdown;
+
+public:
+    explicit Client(std::shared_ptr<librg_cpp::Context> context) : librg_cpp::Client(std::move(context)) {
+        _shutdown = false;
+    }
+
+    ~Client() override = default;
+
+    bool isShutdown() const {
+        return _shutdown;
+    }
+
+protected:
+    void onConnectionRequest(librg_event *event) override {
+        std::cout << "Connection requested" << std::endl;
+    }
+
+    void onConnectionAccept(librg_event *event) override {
+        std::cout << "Connection accepted" << std::endl;
+    }
+
+    void onConnectionDisconnect(librg_event *event) override {
+        std::cout << "Disconnected" << std::endl;
+
+        _shutdown = true;
+    }
+
+    void onConnectionTimeout(librg_event *event) override {
+        std::cout << "Timeout" << std::endl;
+
+        _shutdown = true;
+    }
+};
+
 int main(int argc, char **argv) {
     std::cout << "librg-cpp client example " << LIBRG_CPP_VERSION << std::endl;
 
@@ -32,7 +69,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    librg_cpp::Client client(context);
+    Client client(context);
 
     if (client.connect("::1", 12345) != LIBRG_CPP_NO_ERROR) {
         std::cerr << "Unable to connect to server" << std::endl;
@@ -40,7 +77,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    while (true) {
+    while (client.isShutdown() == false) {
         client.tick();
     }
 
