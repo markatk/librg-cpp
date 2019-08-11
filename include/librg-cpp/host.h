@@ -30,6 +30,7 @@ namespace librg_cpp {
 
     class Context;
     class Event;
+    class Message;
 
     class Host {
     protected:
@@ -38,6 +39,7 @@ namespace librg_cpp {
         char _host[MAX_HOST_LENGTH + 1];
 
         std::map<int, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
+        std::map<int, std::function<void(const std::unique_ptr<Message> &)>> _messageCallbacks;
 
     public:
         explicit Host(std::shared_ptr<Context> context);
@@ -63,10 +65,12 @@ namespace librg_cpp {
         virtual void onClientStreamerUpdate(const std::unique_ptr<Event> &event);
 
         void registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
+        void registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback);
 
         [[nodiscard]] librg_ctx *context() const;
 
     private:
         static void onEvent(librg_event *event);
+        static void onMessage(librg_message *message);
     };
 }

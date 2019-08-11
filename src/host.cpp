@@ -22,6 +22,7 @@
 
 #include "context.h"
 #include "event.h"
+#include "message.h"
 
 #include <cassert>
 #include <utility>
@@ -132,6 +133,14 @@ void librg_cpp::Host::registerEvent(int id, std::function<void(const std::unique
     _eventCallbacks[id] = std::move(callback);
 }
 
+void librg_cpp::Host::registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback) {
+    assert(id >= LIBRG_EVENT_LAST);
+
+    _messageCallbacks[id] = std::move(callback);
+
+    librg_network_add(context(), id, onMessage);
+}
+
 librg_ctx *librg_cpp::Host::context() const {
     assert(_context != nullptr);
 
@@ -151,4 +160,19 @@ void librg_cpp::Host::onEvent(librg_event *event) {
     auto wrappedEvent = std::make_unique<Event>(event, host->_context);
 
     callback(wrappedEvent);
+}
+
+void librg_cpp::Host::onMessage(librg_message *message) {
+    auto host = reinterpret_cast<Host *>(message->ctx->user_data);
+    assert(host != nullptr);
+
+    auto callback = host->_messageCallbacks[message->id];
+    if (callback == nullptr) {
+        return;
+    }
+
+    // wrap event
+    auto wrappedMessage = std::make_unique<Message>(message, host->_context);
+
+    callback(wrappedMessage);
 }

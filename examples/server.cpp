@@ -32,7 +32,7 @@ public:
 
 protected:
     void onConnectionRequest(const std::unique_ptr<librg_cpp::Event> &event) override {
-        std::cout << "Connection requested" << std::endl;
+        std::cout << "Connection requested: " << event->data()->readInt64() << std::endl;
     }
 
     void onConnectionAccept(const std::unique_ptr<librg_cpp::Event> &event) override {

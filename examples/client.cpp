@@ -22,6 +22,10 @@
 
 #include <librg-cpp/librg-cpp.h>
 
+enum events {
+    CONNECTION_READY = LIBRG_EVENT_LAST
+};
+
 class Client : public librg_cpp::Client {
 private:
     bool _shutdown;
@@ -29,17 +33,23 @@ private:
 public:
     explicit Client(std::shared_ptr<librg_cpp::Context> context) : librg_cpp::Client(std::move(context)) {
         _shutdown = false;
+
+        registerMessage(CONNECTION_READY, [this](const std::unique_ptr<librg_cpp::Message> &message) {
+            onConnectionReady(message);
+        });
     }
 
     ~Client() override = default;
 
-    bool isShutdown() const {
+    [[nodiscard]] bool isShutdown() const {
         return _shutdown;
     }
 
 protected:
     void onConnectionRequest(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Connection requested" << std::endl;
+
+        event->data()->writeInt64(128);
     }
 
     void onConnectionAccept(const std::unique_ptr<librg_cpp::Event> &event) override {
@@ -56,6 +66,11 @@ protected:
         std::cout << "Timeout" << std::endl;
 
         _shutdown = true;
+    }
+
+private:
+    void onConnectionReady(const std::unique_ptr<librg_cpp::Message> &message) const {
+        std::cout << "Connection ready" << std::endl;
     }
 };
 
