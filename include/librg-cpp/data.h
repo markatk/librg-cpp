@@ -22,6 +22,11 @@
 
 #include <librg.h>
 
+#define DECL_DATA_METHODS(NAME, TYPE) void write ## NAME (TYPE value); \
+    void write ## NAME ## At(TYPE value, size_t position); \
+    TYPE read ## NAME (); \
+    TYPE read ## NAME ## At (size_t position)
+
 namespace librg_cpp {
     class Data {
     private:
@@ -38,14 +43,26 @@ namespace librg_cpp {
         bool readPointer(void *pointer, size_t size);
         bool readPointerAt(void *pointer, size_t size, size_t position);
 
+        DECL_DATA_METHODS(Int8, int8_t);
+        DECL_DATA_METHODS(UInt8, uint8_t);
+        DECL_DATA_METHODS(Int16, int16_t);
+        DECL_DATA_METHODS(UInt16, uint16_t);
+        DECL_DATA_METHODS(Int32, int32_t);
+        DECL_DATA_METHODS(UInt32, uint32_t);
+        DECL_DATA_METHODS(Int64, int64_t);
+        DECL_DATA_METHODS(UInt64, uint64_t);
+        DECL_DATA_METHODS(Float, float);
+        DECL_DATA_METHODS(Double, double);
+        DECL_DATA_METHODS(Bool, bool);
+
         void reset();
         void grow(size_t minSize);
         void free();
 
         void setWritePosition(size_t position);
         void setReadPosition(size_t position);
-        size_t writePosition() const;
-        size_t readPosition() const;
-        size_t capacity() const;
+        [[nodiscard]] size_t writePosition() const;
+        [[nodiscard]] size_t readPosition() const;
+        [[nodiscard]] size_t capacity() const;
     };
 }
