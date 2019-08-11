@@ -52,5 +52,6 @@ namespace librg_cpp {
         [[nodiscard]] void *userData() const;
 
         friend class Host;
+        friend class Entity;
     };
 }

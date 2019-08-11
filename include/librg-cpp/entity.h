@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: entity.h
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 12.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -20,14 +20,27 @@
 
 #pragma once
 
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
+#include <librg.h>
+#include <memory>
 
-#include "version.h"
-#include "result.h"
-#include "data.h"
-#include "entity.h"
-#include "event.h"
-#include "context.h"
-#include "server.h"
-#include "client.h"
+namespace librg_cpp {
+    class Context;
+
+    class Entity {
+    private:
+        librg_entity *_entity;
+        bool _initialized;
+        std::shared_ptr<Context> _context;
+
+    public:
+        Entity(uint32_t type, const std::shared_ptr<Context> &context);
+        Entity(librg_entity *entity, const std::shared_ptr<Context> &context);
+        virtual ~Entity();
+
+        [[nodiscard]] uint32_t id() const;
+        [[nodiscard]] uint32_t type() const;
+        [[nodiscard]] uint64_t flags() const;
+
+        // TODO: Add position
+    };
+}
