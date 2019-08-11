@@ -26,6 +26,7 @@
 #include "version.h"
 #include "result.h"
 #include "data.h"
+#include "entity.h"
 #include "context.h"
 #include "server.h"
 #include "client.h"

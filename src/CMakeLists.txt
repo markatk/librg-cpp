@@ -1,4 +1,4 @@
-set(SOURCES librg-cpp.cpp context.cpp server.cpp client.cpp host.cpp data.cpp)
+set(SOURCES librg-cpp.cpp context.cpp server.cpp client.cpp host.cpp data.cpp event.cpp)
 
 configure_file(${CMAKE_SOURCE_DIR}/include/librg-cpp/version.h.in version.h)
 
