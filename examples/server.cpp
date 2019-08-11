@@ -31,19 +31,19 @@ public:
     ~Server() override = default;
 
 protected:
-    void onConnectionRequest(librg_event *event) override {
+    void onConnectionRequest(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Connection requested" << std::endl;
     }
 
-    void onConnectionAccept(librg_event *event) override {
+    void onConnectionAccept(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Connection accepted" << std::endl;
     }
 
-    void onConnectionDisconnect(librg_event *event) override {
+    void onConnectionDisconnect(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Disconnected" << std::endl;
     }
 
-    void onConnectionTimeout(librg_event *event) override {
+    void onConnectionTimeout(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Timeout" << std::endl;
     }
 };

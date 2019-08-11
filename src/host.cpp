@@ -21,6 +21,7 @@
 #include "host.h"
 
 #include "context.h"
+#include "event.h"
 
 #include <cassert>
 #include <utility>
@@ -50,19 +51,19 @@ librg_cpp::Host::Host(std::shared_ptr<Context> context) {
     librg_event_add(this->context(), LIBRG_CLIENT_STREAMER_UPDATE, onEvent);
 
     // register own methods as callbacks
-    registerEvent(LIBRG_CONNECTION_INIT, [this](librg_event *event) { onConnectionInitialize(event); });
-    registerEvent(LIBRG_CONNECTION_REQUEST, [this](librg_event *event) { onConnectionRequest(event); });
-    registerEvent(LIBRG_CONNECTION_REFUSE, [this](librg_event *event) { onConnectionRefuse(event); });
-    registerEvent(LIBRG_CONNECTION_ACCEPT, [this](librg_event *event) { onConnectionAccept(event); });
-    registerEvent(LIBRG_CONNECTION_DISCONNECT, [this](librg_event *event) { onConnectionDisconnect(event); });
-    registerEvent(LIBRG_CONNECTION_TIMEOUT, [this](librg_event *event) { onConnectionTimeout(event); });
-    registerEvent(LIBRG_CONNECTION_TIMESYNC, [this](librg_event *event) { onConnectionTimeSync(event); });
-    registerEvent(LIBRG_ENTITY_CREATE, [this](librg_event *event) { onEntityCreate(event); });
-    registerEvent(LIBRG_ENTITY_UPDATE, [this](librg_event *event) { onEntityUpdate(event); });
-    registerEvent(LIBRG_ENTITY_REMOVE, [this](librg_event *event) { onEntityRemove(event); });
-    registerEvent(LIBRG_CLIENT_STREAMER_ADD, [this](librg_event *event) { onClientStreamerAdd(event); });
-    registerEvent(LIBRG_CLIENT_STREAMER_REMOVE, [this](librg_event *event) { onClientStreamerRemove(event); });
-    registerEvent(LIBRG_CLIENT_STREAMER_UPDATE, [this](librg_event *event) { onClientStreamerUpdate(event); });
+    registerEvent(LIBRG_CONNECTION_INIT, [this](const std::unique_ptr<Event> &event) { onConnectionInitialize(event); });
+    registerEvent(LIBRG_CONNECTION_REQUEST, [this](const std::unique_ptr<Event> &event) { onConnectionRequest(event); });
+    registerEvent(LIBRG_CONNECTION_REFUSE, [this](const std::unique_ptr<Event> &event) { onConnectionRefuse(event); });
+    registerEvent(LIBRG_CONNECTION_ACCEPT, [this](const std::unique_ptr<Event> &event) { onConnectionAccept(event); });
+    registerEvent(LIBRG_CONNECTION_DISCONNECT, [this](const std::unique_ptr<Event> &event) { onConnectionDisconnect(event); });
+    registerEvent(LIBRG_CONNECTION_TIMEOUT, [this](const std::unique_ptr<Event> &event) { onConnectionTimeout(event); });
+    registerEvent(LIBRG_CONNECTION_TIMESYNC, [this](const std::unique_ptr<Event> &event) { onConnectionTimeSync(event); });
+    registerEvent(LIBRG_ENTITY_CREATE, [this](const std::unique_ptr<Event> &event) { onEntityCreate(event); });
+    registerEvent(LIBRG_ENTITY_UPDATE, [this](const std::unique_ptr<Event> &event) { onEntityUpdate(event); });
+    registerEvent(LIBRG_ENTITY_REMOVE, [this](const std::unique_ptr<Event> &event) { onEntityRemove(event); });
+    registerEvent(LIBRG_CLIENT_STREAMER_ADD, [this](const std::unique_ptr<Event> &event) { onClientStreamerAdd(event); });
+    registerEvent(LIBRG_CLIENT_STREAMER_REMOVE, [this](const std::unique_ptr<Event> &event) { onClientStreamerRemove(event); });
+    registerEvent(LIBRG_CLIENT_STREAMER_UPDATE, [this](const std::unique_ptr<Event> &event) { onClientStreamerUpdate(event); });
 }
 
 void librg_cpp::Host::tick() {
@@ -73,59 +74,59 @@ bool librg_cpp::Host::isConnected() const {
     return librg_is_connected(context()) != 0;
 }
 
-void librg_cpp::Host::onConnectionInitialize(librg_event *event) {
+void librg_cpp::Host::onConnectionInitialize(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onConnectionRequest(librg_event *event) {
+void librg_cpp::Host::onConnectionRequest(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onConnectionRefuse(librg_event *event) {
+void librg_cpp::Host::onConnectionRefuse(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onConnectionAccept(librg_event *event) {
+void librg_cpp::Host::onConnectionAccept(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onConnectionDisconnect(librg_event *event) {
+void librg_cpp::Host::onConnectionDisconnect(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onConnectionTimeout(librg_event *event) {
+void librg_cpp::Host::onConnectionTimeout(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onConnectionTimeSync(librg_event *event) {
+void librg_cpp::Host::onConnectionTimeSync(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onEntityCreate(librg_event *event) {
+void librg_cpp::Host::onEntityCreate(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onEntityUpdate(librg_event *event) {
+void librg_cpp::Host::onEntityUpdate(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onEntityRemove(librg_event *event) {
+void librg_cpp::Host::onEntityRemove(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onClientStreamerAdd(librg_event *event) {
+void librg_cpp::Host::onClientStreamerAdd(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onClientStreamerRemove(librg_event *event) {
+void librg_cpp::Host::onClientStreamerRemove(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::onClientStreamerUpdate(librg_event *event) {
+void librg_cpp::Host::onClientStreamerUpdate(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }
 
-void librg_cpp::Host::registerEvent(int id, std::function<void(librg_event *)> callback) {
+void librg_cpp::Host::registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback) {
     assert(id >= 0);
 
     _eventCallbacks[id] = std::move(callback);
@@ -146,5 +147,8 @@ void librg_cpp::Host::onEvent(librg_event *event) {
         return;
     }
 
-    callback(event);
+    // wrap event
+    auto wrappedEvent = std::make_unique<Event>(event, host->_context);
+
+    callback(wrappedEvent);
 }

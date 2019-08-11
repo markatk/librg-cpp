@@ -29,6 +29,7 @@ namespace librg_cpp {
     const unsigned int MAX_HOST_LENGTH = 64;
 
     class Context;
+    class Event;
 
     class Host {
     protected:
@@ -36,8 +37,7 @@ namespace librg_cpp {
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
 
-        // TODO: Wrap event with class
-        std::map<int, std::function<void(librg_event *)>> _eventCallbacks;
+        std::map<int, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
 
     public:
         explicit Host(std::shared_ptr<Context> context);
@@ -48,21 +48,21 @@ namespace librg_cpp {
         [[nodiscard]] bool isConnected() const;
 
     protected:
-        virtual void onConnectionInitialize(librg_event *event);
-        virtual void onConnectionRequest(librg_event *event);
-        virtual void onConnectionRefuse(librg_event *event);
-        virtual void onConnectionAccept(librg_event *event);
-        virtual void onConnectionDisconnect(librg_event *event);
-        virtual void onConnectionTimeout(librg_event *event);
-        virtual void onConnectionTimeSync(librg_event *event);
-        virtual void onEntityCreate(librg_event *event);
-        virtual void onEntityUpdate(librg_event *event);
-        virtual void onEntityRemove(librg_event *event);
-        virtual void onClientStreamerAdd(librg_event *event);
-        virtual void onClientStreamerRemove(librg_event *event);
-        virtual void onClientStreamerUpdate(librg_event *event);
+        virtual void onConnectionInitialize(const std::unique_ptr<Event> &event);
+        virtual void onConnectionRequest(const std::unique_ptr<Event> &event);
+        virtual void onConnectionRefuse(const std::unique_ptr<Event> &event);
+        virtual void onConnectionAccept(const std::unique_ptr<Event> &event);
+        virtual void onConnectionDisconnect(const std::unique_ptr<Event> &event);
+        virtual void onConnectionTimeout(const std::unique_ptr<Event> &event);
+        virtual void onConnectionTimeSync(const std::unique_ptr<Event> &event);
+        virtual void onEntityCreate(const std::unique_ptr<Event> &event);
+        virtual void onEntityUpdate(const std::unique_ptr<Event> &event);
+        virtual void onEntityRemove(const std::unique_ptr<Event> &event);
+        virtual void onClientStreamerAdd(const std::unique_ptr<Event> &event);
+        virtual void onClientStreamerRemove(const std::unique_ptr<Event> &event);
+        virtual void onClientStreamerUpdate(const std::unique_ptr<Event> &event);
 
-        void registerEvent(int id, std::function<void(librg_event *)> callback);
+        void registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
 
         [[nodiscard]] librg_ctx *context() const;
 
