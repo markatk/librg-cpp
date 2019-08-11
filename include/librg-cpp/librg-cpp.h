@@ -28,6 +28,7 @@
 #include "data.h"
 #include "entity.h"
 #include "event.h"
+#include "message.h"
 #include "context.h"
 #include "server.h"
 #include "client.h"
