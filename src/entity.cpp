@@ -69,3 +69,45 @@ uint64_t librg_cpp::Entity::flags() const {
 
     return _entity->flags;
 }
+
+bool librg_cpp::Entity::isAlive() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_ALIVE;
+}
+
+bool librg_cpp::Entity::isClient() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_CLIENT;
+}
+
+bool librg_cpp::Entity::hasVisibility() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_VISIBILITY;
+}
+
+bool librg_cpp::Entity::hasQueried() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_QUERIED;
+}
+
+bool librg_cpp::Entity::isControlled() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_CONTROLLED;
+}
+
+bool librg_cpp::Entity::isUnused() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_UNUSED;
+}
+
+bool librg_cpp::Entity::isControlRequested() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_CONTROL_REQUESTED;
+}

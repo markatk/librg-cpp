@@ -42,5 +42,13 @@ namespace librg_cpp {
         uint64_t flags() const;
 
         // TODO: Add position
+
+        bool isAlive() const;
+        bool isClient() const;
+        bool hasVisibility() const;
+        bool hasQueried() const;
+        bool isControlled() const;
+        bool isUnused() const;
+        bool isControlRequested() const;
     };
 }
