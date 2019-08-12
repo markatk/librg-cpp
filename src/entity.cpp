@@ -101,6 +101,34 @@ std::shared_ptr<librg_cpp::Peer> librg_cpp::Entity::controlPeer() const {
     return _context->getPeer(peer);
 }
 
+#ifdef LIBRG_FEATURE_ENTITY_VISIBILITY
+void librg_cpp::Entity::setVisibility(librg_visibility state) {
+    assert(_entity != nullptr);
+
+    librg_entity_visibility_set(&_context->_context, id(), state);
+}
+
+librg_visibility librg_cpp::Entity::visibility() const {
+    assert(_entity != nullptr);
+
+    return librg_entity_visibility_get(&_context->_context, id());
+}
+
+void librg_cpp::Entity::setVisibilityFor(const std::shared_ptr<Entity> &target, librg_visibility state) {
+    assert(_entity != nullptr);
+    assert(target != nullptr);
+
+    librg_entity_visibility_set_for(&_context->_context, id(), target->id(), state);
+}
+
+librg_visibility librg_cpp::Entity::visibilityFor(const std::shared_ptr<Entity> &target) const {
+    assert(_entity != nullptr);
+    assert(target != nullptr);
+
+    return librg_entity_visibility_get_for(&_context->_context, id(), target->id());
+}
+#endif
+
 bool librg_cpp::Entity::isAlive() const {
     assert(_entity != nullptr);
 

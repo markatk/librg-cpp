@@ -49,6 +49,18 @@ namespace librg_cpp {
         void ignoreNextControlUpdate();
         std::shared_ptr<Peer> controlPeer() const;
 
+#ifdef LIBRG_FEATURE_ENTITY_VISIBILITY
+        void setVisibility(librg_visibility state);
+        librg_visibility visibility() const;
+        void setVisibilityFor(const std::shared_ptr<Entity> &target, librg_visibility state);
+        librg_visibility visibilityFor(const std::shared_ptr<Entity> &target) const;
+#endif
+
+#ifdef LIBRG_FEATURE_VIRTUAL_WORLDS
+        void setWorld(uint32_t world);
+        uint32_t world() const;
+#endif
+
         bool isAlive() const;
         bool isClient() const;
         bool hasVisibility() const;
