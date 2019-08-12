@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: peer.cpp
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 12.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -18,18 +18,12 @@
  * limitations under the License.
  */
 
-#pragma once
-
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
-
-#include "version.h"
-#include "result.h"
-#include "data.h"
-#include "entity.h"
-#include "event.h"
-#include "message.h"
 #include "peer.h"
-#include "context.h"
-#include "server.h"
-#include "client.h"
+
+#include <cassert>
+
+librg_cpp::Peer::Peer(librg_peer *peer) {
+    assert(peer != nullptr);
+
+    _peer = peer;
+}

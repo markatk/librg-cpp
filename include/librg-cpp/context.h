@@ -21,12 +21,22 @@
 #pragma once
 
 #include <librg.h>
+#include <memory>
 
 namespace librg_cpp {
-    class Context {
+    template<class T, class P>
+    class Pool;
+
+    class Peer;
+    class Entity;
+
+    class Context : private std::enable_shared_from_this<Context> {
     private:
         librg_ctx _context;
         bool _initialized;
+
+        std::shared_ptr<Pool<librg_peer, Peer>> _peerPool;
+        std::shared_ptr<Pool<librg_entity, Entity>> _entityPool;
 
     public:
         explicit Context(bool isServer = true, double tickDelay = 32.0, unsigned short maxClients = 16);
@@ -50,6 +60,9 @@ namespace librg_cpp {
     private:
         void setUserData(void *ptr);
         [[nodiscard]] void *userData() const;
+
+        [[nodiscard]] std::shared_ptr<Peer> getPeer(librg_peer *peer);
+        [[nodiscard]] std::shared_ptr<Entity> getEntity(librg_entity *entity);
 
         friend class Host;
         friend class Entity;

@@ -21,9 +21,16 @@
 #include "context.h"
 
 #include "result.h"
+#include "pool.h"
+#include "peer.h"
+#include "entity.h"
+
+#include <cassert>
 
 librg_cpp::Context::Context(bool isServer, double tickDelay, unsigned short maxClients) : _context({0}) {
     _initialized = false;
+    _peerPool = std::make_shared<Pool<librg_peer, Peer>>();
+    _entityPool = std::make_shared<Pool<librg_entity, Entity>>();
 
     reset();
 
@@ -112,4 +119,30 @@ void librg_cpp::Context::setUserData(void *ptr) {
 
 void *librg_cpp::Context::userData() const {
     return _context.user_data;
+}
+
+std::shared_ptr<librg_cpp::Peer> librg_cpp::Context::getPeer(librg_peer *value) {
+    assert(value != nullptr);
+
+    auto peer = _peerPool->get(value);
+    if (peer == nullptr) {
+        peer = std::make_shared<Peer>(value);
+
+        _peerPool->add(value, peer);
+    }
+
+    return peer;
+}
+
+std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(librg_entity *value) {
+    assert(value != nullptr);
+
+    auto entity = _entityPool->get(value);
+    if (entity == nullptr) {
+        entity = std::make_shared<Entity>(value, shared_from_this());
+
+        _entityPool->add(value, entity);
+    }
+
+    return entity;
 }

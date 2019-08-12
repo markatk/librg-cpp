@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: peer.h
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 12.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -20,16 +20,17 @@
 
 #pragma once
 
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
+#include <librg.h>
 
-#include "version.h"
-#include "result.h"
-#include "data.h"
-#include "entity.h"
-#include "event.h"
-#include "message.h"
-#include "peer.h"
-#include "context.h"
-#include "server.h"
-#include "client.h"
+namespace librg_cpp {
+    class Peer {
+    private:
+        librg_peer *_peer;
+
+    public:
+        explicit Peer(librg_peer *peer);
+        virtual ~Peer() = default;
+
+        friend class Host;
+    };
+}
