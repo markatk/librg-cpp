@@ -44,25 +44,25 @@ namespace librg_cpp {
 
         int initialize();
         void deinitialize();
-        [[nodiscard]] bool isInitialized() const;
+        bool isInitialized() const;
 
         void setServer(bool isServer);
         void setTickDelay(double delay);
         void setMaxClients(unsigned short maxClients);
         void setMaxEntities(unsigned short maxClients);
-        [[nodiscard]] bool isServer() const;
-        [[nodiscard]] double tickDelay() const;
-        [[nodiscard]] unsigned short maxClients() const;
-        [[nodiscard]] unsigned short maxEntities() const;
+        bool isServer() const;
+        double tickDelay() const;
+        unsigned short maxClients() const;
+        unsigned short maxEntities() const;
 
         void reset();
 
     private:
         void setUserData(void *ptr);
-        [[nodiscard]] void *userData() const;
+        void *userData() const;
 
-        [[nodiscard]] std::shared_ptr<Peer> getPeer(librg_peer *peer);
-        [[nodiscard]] std::shared_ptr<Entity> getEntity(librg_entity *entity);
+        std::shared_ptr<Peer> getPeer(librg_peer *peer);
+        std::shared_ptr<Entity> getEntity(librg_entity *entity);
 
         friend class Host;
         friend class Entity;

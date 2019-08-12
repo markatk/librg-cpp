@@ -37,9 +37,9 @@ namespace librg_cpp {
         Entity(librg_entity *entity, const std::shared_ptr<Context> &context);
         virtual ~Entity();
 
-        [[nodiscard]] uint32_t id() const;
-        [[nodiscard]] uint32_t type() const;
-        [[nodiscard]] uint64_t flags() const;
+        uint32_t id() const;
+        uint32_t type() const;
+        uint64_t flags() const;
 
         // TODO: Add position
     };

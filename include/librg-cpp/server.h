@@ -35,7 +35,7 @@ namespace librg_cpp {
 
         void setPort(int port);
         void setHost(const std::string &host);
-        [[nodiscard]] int port() const;
-        [[nodiscard]] std::string host() const;
+        int port() const;
+        std::string host() const;
     };
 }

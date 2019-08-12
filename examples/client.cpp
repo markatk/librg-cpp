@@ -41,7 +41,7 @@ public:
 
     ~Client() override = default;
 
-    [[nodiscard]] bool isShutdown() const {
+    bool isShutdown() const {
         return _shutdown;
     }
 

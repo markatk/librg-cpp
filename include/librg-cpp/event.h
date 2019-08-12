@@ -41,21 +41,21 @@ namespace librg_cpp {
         Event(librg_event *event, const std::shared_ptr<Context> &context);
         virtual ~Event() = default;
 
-        [[nodiscard]] uint32_t id() const;
-        [[nodiscard]] std::shared_ptr<Context> context() const;
-        [[nodiscard]] std::shared_ptr<Data> data() const;
-        [[nodiscard]] std::shared_ptr<Entity> entity() const;
-        [[nodiscard]] std::shared_ptr<Peer> peer() const;
-        [[nodiscard]] uint64_t flags() const;
+        uint32_t id() const;
+        std::shared_ptr<Context> context() const;
+        std::shared_ptr<Data> data() const;
+        std::shared_ptr<Entity> entity() const;
+        std::shared_ptr<Peer> peer() const;
+        uint64_t flags() const;
 
         void setUserData(void *ptr);
-        [[nodiscard]] void *userData() const;
+        void *userData() const;
 
         void reject();
-        [[nodiscard]] bool isRejected() const;
-        [[nodiscard]] bool isSucceeded() const;
-        [[nodiscard]] bool isRejectable() const;
-        [[nodiscard]] bool isRemote() const;
-        [[nodiscard]] bool isLocal() const;
+        bool isRejected() const;
+        bool isSucceeded() const;
+        bool isRejectable() const;
+        bool isRemote() const;
+        bool isLocal() const;
     };
 }

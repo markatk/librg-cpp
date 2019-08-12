@@ -48,7 +48,7 @@ namespace librg_cpp {
 
         void tick();
 
-        [[nodiscard]] bool isConnected() const;
+        bool isConnected() const;
 
     protected:
         void sendMessageToAll(uint32_t id, void *data, size_t size);
@@ -71,7 +71,7 @@ namespace librg_cpp {
         void registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
         void registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback);
 
-        [[nodiscard]] librg_ctx *context() const;
+        librg_ctx *context() const;
 
     private:
         static void onEvent(librg_event *event);

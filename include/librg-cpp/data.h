@@ -63,8 +63,8 @@ namespace librg_cpp {
 
         void setWritePosition(size_t position);
         void setReadPosition(size_t position);
-        [[nodiscard]] size_t writePosition() const;
-        [[nodiscard]] size_t readPosition() const;
-        [[nodiscard]] size_t capacity() const;
+        size_t writePosition() const;
+        size_t readPosition() const;
+        size_t capacity() const;
     };
 }

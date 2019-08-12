@@ -39,12 +39,12 @@ namespace librg_cpp {
         Message(librg_message *message, const std::shared_ptr<Context> &context);
         virtual ~Message() = default;
 
-        [[nodiscard]] uint32_t id() const;
-        [[nodiscard]] std::shared_ptr<Context> context() const;
-        [[nodiscard]] std::shared_ptr<Data> data() const;
-        [[nodiscard]] std::shared_ptr<Peer> peer() const;
+        uint32_t id() const;
+        std::shared_ptr<Context> context() const;
+        std::shared_ptr<Data> data() const;
+        std::shared_ptr<Peer> peer() const;
 
         void setUserData(void *ptr);
-        [[nodiscard]] void *userData() const;
+        void *userData() const;
     };
 }
