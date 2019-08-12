@@ -26,7 +26,7 @@
 
 #include <cassert>
 
-librg_cpp::Server::Server(std::shared_ptr<Context> context, int port, const std::string &host) : librg_cpp::Host(std::move(context)) {
+librg_cpp::Server::Server(std::shared_ptr<Context> context, uint16_t port, const std::string &host) : librg_cpp::Host(std::move(context)) {
     setPort(port);
     setHost(host);
 }
@@ -35,7 +35,7 @@ librg_cpp::Server::~Server() {
     stop();
 }
 
-int librg_cpp::Server::start() {
+uint32_t librg_cpp::Server::start() {
     assert(_context != nullptr);
 
     if (_context->isInitialized() == false) {
@@ -146,7 +146,7 @@ void librg_cpp::Server::sendMessageInStreamExcept(uint16_t id, const std::shared
     Host::sendMessageInStreamExcept(id, entity, peer, data->raw(), data->writePosition());
 }
 
-void librg_cpp::Server::setPort(int port) {
+void librg_cpp::Server::setPort(uint16_t port) {
     assert(port >= 0);
 
     _address.port = port;
@@ -160,7 +160,7 @@ void librg_cpp::Server::setHost(const std::string &host) {
 #endif
 }
 
-int librg_cpp::Server::port() const {
+uint16_t librg_cpp::Server::port() const {
     return _address.port;
 }
 

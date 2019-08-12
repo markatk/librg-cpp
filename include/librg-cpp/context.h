@@ -39,7 +39,7 @@ namespace librg_cpp {
         std::shared_ptr<Pool<librg_entity, Entity>> _entityPool;
 
     public:
-        explicit Context(bool isServer = true, double tickDelay = 32.0, unsigned short maxClients = 16);
+        explicit Context(bool isServer = true, double tickDelay = 32.0, uint16_t maxClients = 16);
         virtual ~Context();
 
         int initialize();
@@ -48,12 +48,12 @@ namespace librg_cpp {
 
         void setServer(bool isServer);
         void setTickDelay(double delay);
-        void setMaxClients(unsigned short maxClients);
-        void setMaxEntities(unsigned short maxClients);
+        void setMaxClients(uint16_t maxClients);
+        void setMaxEntities(uint16_t maxClients);
         bool isServer() const;
         double tickDelay() const;
-        unsigned short maxClients() const;
-        unsigned short maxEntities() const;
+        uint16_t maxClients() const;
+        uint16_t maxEntities() const;
 
         double time();
 

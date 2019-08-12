@@ -31,10 +31,10 @@ namespace librg_cpp {
 
     class Server : public Host {
     public:
-        Server(std::shared_ptr<Context> context, int port, const std::string &host = "::1");
+        Server(std::shared_ptr<Context> context, uint16_t port, const std::string &host = "::1");
         ~Server() override;
 
-        int start();
+        uint32_t start();
         void stop();
 
         void kick(const std::shared_ptr<Peer> &peer);
@@ -50,9 +50,9 @@ namespace librg_cpp {
         void sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, void *data, size_t size) override;
         void sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data);
 
-        void setPort(int port);
+        void setPort(uint16_t port);
         void setHost(const std::string &host);
-        int port() const;
+        uint16_t port() const;
         std::string host() const;
     };
 }

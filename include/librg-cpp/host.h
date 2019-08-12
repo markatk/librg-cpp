@@ -40,8 +40,8 @@ namespace librg_cpp {
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
 
-        std::map<int, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
-        std::map<int, std::function<void(const std::unique_ptr<Message> &)>> _messageCallbacks;
+        std::map<uint32_t, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
+        std::map<uint16_t, std::function<void(const std::unique_ptr<Message> &)>> _messageCallbacks;
 
     public:
         explicit Host(std::shared_ptr<Context> context);
@@ -72,10 +72,10 @@ namespace librg_cpp {
         virtual void onClientStreamerRemove(const std::unique_ptr<Event> &event);
         virtual void onClientStreamerUpdate(const std::unique_ptr<Event> &event);
 
-        void registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
-        void unregisterEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
-        void registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback);
-        void unregisterMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback);
+        void registerEvent(uint32_t id, std::function<void(const std::unique_ptr<Event> &)> callback);
+        void unregisterEvent(uint32_t id, std::function<void(const std::unique_ptr<Event> &)> callback);
+        void registerMessage(uint16_t id, std::function<void(const std::unique_ptr<Message> &)> callback);
+        void unregisterMessage(uint16_t, std::function<void(const std::unique_ptr<Message> &)> callback);
 
         librg_ctx *context() const;
 

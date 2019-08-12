@@ -174,15 +174,13 @@ void librg_cpp::Host::onClientStreamerUpdate(const std::unique_ptr<Event> &event
     // Do nothing by default
 }
 
-void librg_cpp::Host::registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback) {
-    assert(id >= 0);
+void librg_cpp::Host::registerEvent(uint32_t id, std::function<void(const std::unique_ptr<Event> &)> callback) {
     assert(callback != nullptr);
 
     _eventCallbacks[id] = std::move(callback);
 }
 
-void librg_cpp::Host::unregisterEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback) {
-    assert(id >= 0);
+void librg_cpp::Host::unregisterEvent(uint32_t id, std::function<void(const std::unique_ptr<Event> &)> callback) {
     assert(callback != nullptr);
 
     auto it = _eventCallbacks.find(id);
@@ -193,7 +191,7 @@ void librg_cpp::Host::unregisterEvent(int id, std::function<void(const std::uniq
     _eventCallbacks.erase(it);
 }
 
-void librg_cpp::Host::registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback) {
+void librg_cpp::Host::registerMessage(uint16_t id, std::function<void(const std::unique_ptr<Message> &)> callback) {
     assert(_context != nullptr);
     assert(id >= LIBRG_EVENT_LAST);
     assert(callback != nullptr);
@@ -203,7 +201,7 @@ void librg_cpp::Host::registerMessage(int id, std::function<void(const std::uniq
     librg_network_add(context(), id, onMessage);
 }
 
-void librg_cpp::Host::unregisterMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback) {
+void librg_cpp::Host::unregisterMessage(uint16_t id, std::function<void(const std::unique_ptr<Message> &)> callback) {
     assert(_context != nullptr);
     assert(id >= LIBRG_EVENT_LAST);
     assert(callback != nullptr);

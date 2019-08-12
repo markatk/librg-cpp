@@ -33,7 +33,7 @@ librg_cpp::Client::~Client() {
     disconnect();
 }
 
-int librg_cpp::Client::connect(const std::string &host, int port) {
+int librg_cpp::Client::connect(const std::string &host, int32_t port) {
     assert(_context != nullptr);
     assert(port >= 0);
 

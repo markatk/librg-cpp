@@ -32,7 +32,7 @@ namespace librg_cpp {
         explicit Client(std::shared_ptr<Context> context);
         ~Client() override;
 
-        int connect(const std::string &host, int port);
+        int connect(const std::string &host, int32_t port);
         void disconnect();
 
         void sendMessage(uint16_t id, void *data, size_t size);

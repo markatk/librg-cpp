@@ -27,7 +27,7 @@
 
 #include <cassert>
 
-librg_cpp::Context::Context(bool isServer, double tickDelay, unsigned short maxClients) : _context({0}) {
+librg_cpp::Context::Context(bool isServer, double tickDelay, uint16_t maxClients) : _context({0}) {
     assert(tickDelay > 0);
 
     _initialized = false;
@@ -83,11 +83,11 @@ void librg_cpp::Context::setTickDelay(double delay) {
     _context.tick_delay = delay;
 }
 
-void librg_cpp::Context::setMaxClients(unsigned short maxClients) {
+void librg_cpp::Context::setMaxClients(uint16_t maxClients) {
     _context.max_connections = maxClients;
 }
 
-void librg_cpp::Context::setMaxEntities(unsigned short maxEntities) {
+void librg_cpp::Context::setMaxEntities(uint16_t maxEntities) {
     _context.max_entities = maxEntities;
 }
 
@@ -99,11 +99,11 @@ double librg_cpp::Context::tickDelay() const {
     return _context.tick_delay;
 }
 
-unsigned short librg_cpp::Context::maxClients() const {
+uint16_t librg_cpp::Context::maxClients() const {
     return _context.max_connections;
 }
 
-unsigned short librg_cpp::Context::maxEntities() const {
+uint16_t librg_cpp::Context::maxEntities() const {
     return _context.max_entities;
 }
 
