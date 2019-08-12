@@ -31,6 +31,8 @@ namespace librg_cpp {
     class Context;
     class Event;
     class Message;
+    class Peer;
+    class Entity;
 
     class Host {
     protected:
@@ -38,7 +40,6 @@ namespace librg_cpp {
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
 
-        // TODO: Allow multiple callbacks per event/message
         std::map<int, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
         std::map<int, std::function<void(const std::unique_ptr<Message> &)>> _messageCallbacks;
 
@@ -51,8 +52,11 @@ namespace librg_cpp {
         bool isConnected() const;
 
     protected:
-        void sendMessageToAll(uint32_t id, void *data, size_t size);
-        void sendMessageInStream(uint32_t id, uint32_t entityId, void *data, size_t size);
+        virtual void sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size);
+        virtual void sendMessageToAll(uint16_t id, void *data, size_t size);
+        virtual void sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size);
+        virtual void sendMessageInStream(uint16_t id, const std::shared_ptr<Entity> &entity, void *data, size_t size);
+        virtual void sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, void *data, size_t size);
 
         virtual void onConnectionInitialize(const std::unique_ptr<Event> &event);
         virtual void onConnectionRequest(const std::unique_ptr<Event> &event);

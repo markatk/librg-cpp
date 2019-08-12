@@ -26,6 +26,8 @@
 
 namespace librg_cpp {
     class Peer;
+    class Data;
+    class Entity;
 
     class Server : public Host {
     public:
@@ -36,6 +38,17 @@ namespace librg_cpp {
         void stop();
 
         void kick(const std::shared_ptr<Peer> &peer);
+
+        void sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size) override;
+        void sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data);
+        void sendMessageToAll(uint16_t id, void *data, size_t size) override;
+        void sendMessageToAll(uint16_t id, const std::shared_ptr<Data> &data);
+        void sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size) override;
+        void sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data);
+        void sendMessageInStream(uint16_t id, const std::shared_ptr<Entity> &entity, void *data, size_t size) override;
+        void sendMessageInStream(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Data> &data);
+        void sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, void *data, size_t size) override;
+        void sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data);
 
         void setPort(int port);
         void setHost(const std::string &host);

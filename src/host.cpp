@@ -23,6 +23,8 @@
 #include "context.h"
 #include "event.h"
 #include "message.h"
+#include "peer.h"
+#include "entity.h"
 
 #include <cassert>
 #include <utility>
@@ -80,18 +82,44 @@ bool librg_cpp::Host::isConnected() const {
     return librg_is_connected(context()) != 0;
 }
 
-void librg_cpp::Host::sendMessageToAll(uint32_t id, void *data, size_t size) {
+void librg_cpp::Host::sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    librg_message_send_to(context(), id, peer->_peer, data, size);
+}
+
+void librg_cpp::Host::sendMessageToAll(uint16_t id, void *data, size_t size) {
     assert(_context != nullptr);
     assert(data != nullptr);
 
     librg_message_send_all(context(), id, data, size);
 }
 
-void librg_cpp::Host::sendMessageInStream(uint32_t id, uint32_t entityId, void *data, size_t size) {
+void librg_cpp::Host::sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size) {
     assert(_context != nullptr);
+    assert(peer != nullptr);
     assert(data != nullptr);
 
-    librg_message_send_instream(context(), id, entityId, data, size);
+    librg_message_send_except(context(), id, peer->_peer, data, size);
+}
+
+void librg_cpp::Host::sendMessageInStream(uint16_t id, const std::shared_ptr<Entity> &entity, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(entity != nullptr);
+    assert(data != nullptr);
+
+    librg_message_send_instream(context(), id, entity->id(), data, size);
+}
+
+void librg_cpp::Host::sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(entity != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    librg_message_send_instream_except(context(), id, entity->id(), peer->_peer, data, size);
 }
 
 void librg_cpp::Host::onConnectionInitialize(const std::unique_ptr<Event> &event) {

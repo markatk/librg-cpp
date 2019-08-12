@@ -22,6 +22,7 @@
 
 #include "context.h"
 #include "peer.h"
+#include "data.h"
 
 #include <cassert>
 
@@ -63,6 +64,86 @@ void librg_cpp::Server::kick(const std::shared_ptr<Peer> &peer) {
     assert(peer != nullptr);
 
     librg_network_kick(context(), peer->_peer);
+}
+
+void librg_cpp::Server::sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessage(id, peer, data, size);
+}
+
+void librg_cpp::Server::sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data) {
+    assert(_context != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessage(id, peer, data->raw(), data->writePosition());
+}
+
+void librg_cpp::Server::sendMessageToAll(uint16_t id, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageToAll(id, data, size);
+}
+
+void librg_cpp::Server::sendMessageToAll(uint16_t id, const std::shared_ptr<Data> &data) {
+    assert(_context != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageToAll(id, data->raw(), data->writePosition());
+}
+
+void librg_cpp::Server::sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageExcept(id, peer, data, size);
+}
+
+void librg_cpp::Server::sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data) {
+    assert(_context != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageExcept(id, peer, data->raw(), data->writePosition());
+}
+
+void librg_cpp::Server::sendMessageInStream(uint16_t id, const std::shared_ptr<Entity> &entity, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(entity != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageInStream(id, entity, data, size);
+}
+
+void librg_cpp::Server::sendMessageInStream(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Data> &data) {
+    assert(_context != nullptr);
+    assert(entity != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageInStream(id, entity, data->raw(), data->writePosition());
+}
+
+void librg_cpp::Server::sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(entity != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageInStreamExcept(id, entity, peer, data, size);
+}
+
+void librg_cpp::Server::sendMessageInStreamExcept(uint16_t id, const std::shared_ptr<Entity> &entity, const std::shared_ptr<Peer> &peer, const std::shared_ptr<Data> &data) {
+    assert(_context != nullptr);
+    assert(entity != nullptr);
+    assert(peer != nullptr);
+    assert(data != nullptr);
+
+    Host::sendMessageInStreamExcept(id, entity, peer, data->raw(), data->writePosition());
 }
 
 void librg_cpp::Server::setPort(int port) {

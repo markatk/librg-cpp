@@ -35,7 +35,7 @@ namespace librg_cpp {
         int connect(const std::string &host, int port);
         void disconnect();
 
-        void sendMessage(uint32_t id, void *data, size_t size);
-        void sendMessage(uint32_t id, const std::shared_ptr<Data> &data);
+        void sendMessage(uint16_t id, void *data, size_t size);
+        void sendMessage(uint16_t id, const std::shared_ptr<Data> &data);
     };
 }
