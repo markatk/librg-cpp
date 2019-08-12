@@ -25,6 +25,7 @@
 
 namespace librg_cpp {
     class Context;
+    class Peer;
 
     class Entity {
     private:
@@ -43,12 +44,18 @@ namespace librg_cpp {
 
         // TODO: Add position
 
+        void setControlPeer(const std::shared_ptr<Peer> &peer);
+        void removeControlPeer();
+        void ignoreNextControlUpdate();
+        std::shared_ptr<Peer> controlPeer() const;
+
         bool isAlive() const;
         bool isClient() const;
         bool hasVisibility() const;
         bool hasQueried() const;
         bool isControlled() const;
-        bool isUnused() const;
         bool isControlRequested() const;
+        bool isMarkedRemoval() const;
+        bool isUnused() const;
     };
 }

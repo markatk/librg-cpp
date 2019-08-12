@@ -21,6 +21,7 @@
 #include "entity.h"
 
 #include "context.h"
+#include "peer.h"
 
 #include <cassert>
 
@@ -70,6 +71,36 @@ uint64_t librg_cpp::Entity::flags() const {
     return _entity->flags;
 }
 
+void librg_cpp::Entity::setControlPeer(const std::shared_ptr<Peer> &peer) {
+    assert(_entity != nullptr);
+    assert(peer != nullptr);
+
+    librg_entity_control_set(&_context->_context, id(), peer->_peer);
+}
+
+void librg_cpp::Entity::removeControlPeer() {
+    assert(_entity != nullptr);
+
+    librg_entity_control_remove(&_context->_context, id());
+}
+
+void librg_cpp::Entity::ignoreNextControlUpdate() {
+    assert(_entity != nullptr);
+
+    librg_entity_control_ignore_next_update(&_context->_context, id());
+}
+
+std::shared_ptr<librg_cpp::Peer> librg_cpp::Entity::controlPeer() const {
+    assert(_entity != nullptr);
+
+    auto peer = librg_entity_control_get(&_context->_context, id());
+    if (peer == nullptr) {
+        return nullptr;
+    }
+
+    return _context->getPeer(peer);
+}
+
 bool librg_cpp::Entity::isAlive() const {
     assert(_entity != nullptr);
 
@@ -100,14 +131,20 @@ bool librg_cpp::Entity::isControlled() const {
     return _entity->flags & (uint64_t) LIBRG_ENTITY_CONTROLLED;
 }
 
-bool librg_cpp::Entity::isUnused() const {
-    assert(_entity != nullptr);
-
-    return _entity->flags & (uint64_t) LIBRG_ENTITY_UNUSED;
-}
-
 bool librg_cpp::Entity::isControlRequested() const {
     assert(_entity != nullptr);
 
     return _entity->flags & (uint64_t) LIBRG_ENTITY_CONTROL_REQUESTED;
+}
+
+bool librg_cpp::Entity::isMarkedRemoval() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_MARKED_REMOVAL;
+}
+
+bool librg_cpp::Entity::isUnused() const {
+    assert(_entity != nullptr);
+
+    return _entity->flags & (uint64_t) LIBRG_ENTITY_UNUSED;
 }
