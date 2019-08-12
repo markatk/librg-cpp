@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: utility.cpp
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 12.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -18,16 +18,16 @@
  * limitations under the License.
  */
 
-#pragma once
-
-#include "version.h"
-#include "result.h"
-#include "data.h"
-#include "entity.h"
-#include "event.h"
-#include "message.h"
-#include "peer.h"
-#include "context.h"
-#include "server.h"
-#include "client.h"
 #include "utility.h"
+
+void librg_cpp::setOption(uint32_t option, uint32_t value) {
+    librg_option_set(option, value);
+}
+
+uint32_t librg_cpp::getOption(uint32_t option) {
+    return librg_option_get(option);
+}
+
+double librg_cpp::standardDeviation(std::vector<double> values) {
+    return librg_standard_deviation(values.data(), values.size());
+}

@@ -1,7 +1,7 @@
 /*
- * File: librg-cpp.h
+ * File: utility.h
  * Author: MarkAtk
- * Date: 01.08.2019
+ * Date: 12.08.2019
  *
  * Copyright 2019 MarkAtk
  * 
@@ -20,14 +20,12 @@
 
 #pragma once
 
-#include "version.h"
-#include "result.h"
-#include "data.h"
-#include "entity.h"
-#include "event.h"
-#include "message.h"
-#include "peer.h"
-#include "context.h"
-#include "server.h"
-#include "client.h"
-#include "utility.h"
+#include <librg.h>
+#include <vector>
+
+namespace librg_cpp {
+    void setOption(uint32_t option, uint32_t value);
+    uint32_t getOption(uint32_t option);
+
+    double standardDeviation(std::vector<double> values);
+}
