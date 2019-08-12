@@ -26,12 +26,14 @@
 namespace librg_cpp {
     class Context;
     class Data;
+    class Peer;
 
     class Message {
     private:
         librg_message *_message;
         std::shared_ptr<Context> _context;
         std::shared_ptr<Data> _data;
+        std::shared_ptr<Peer> _peer;
 
     public:
         Message(librg_message *message, const std::shared_ptr<Context> &context);
@@ -40,6 +42,7 @@ namespace librg_cpp {
         [[nodiscard]] uint32_t id() const;
         [[nodiscard]] std::shared_ptr<Context> context() const;
         [[nodiscard]] std::shared_ptr<Data> data() const;
+        [[nodiscard]] std::shared_ptr<Peer> peer() const;
 
         void setUserData(void *ptr);
         [[nodiscard]] void *userData() const;

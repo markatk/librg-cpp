@@ -85,14 +85,32 @@ void librg_cpp::Event::reject() {
     librg_event_reject(_event);
 }
 
-bool librg_cpp::Event::rejectable() const {
+bool librg_cpp::Event::isRejected() const {
+    assert(_event != nullptr);
+
+    return _event->flags & (uint64_t) LIBRG_EVENT_REJECTED;
+}
+
+bool librg_cpp::Event::isRejectable() const {
     assert(_event != nullptr);
 
     return librg_event_rejectable(_event);
 }
 
-bool librg_cpp::Event::succeeded() const {
+bool librg_cpp::Event::isSucceeded() const {
     assert(_event != nullptr);
 
     return librg_event_succeeded(_event);
+}
+
+bool librg_cpp::Event::isRemote() const {
+    assert(_event != nullptr);
+
+    return _event->flags & (uint64_t) LIBRG_EVENT_REMOTE;
+}
+
+bool librg_cpp::Event::isLocal() const {
+    assert(_event != nullptr);
+
+    return _event->flags & (uint64_t) LIBRG_EVENT_LOCAL;
 }

@@ -32,6 +32,7 @@ librg_cpp::Message::Message(librg_message *message, const std::shared_ptr<Contex
     _message = message;
     _context = context;
     _data = std::make_shared<Data>(_message->data);
+    _peer = context->getPeer(_message->peer);
 }
 
 uint32_t librg_cpp::Message::id() const {
@@ -44,6 +45,10 @@ std::shared_ptr<librg_cpp::Context> librg_cpp::Message::context() const {
 
 std::shared_ptr<librg_cpp::Data> librg_cpp::Message::data() const {
     return _data;
+}
+
+std::shared_ptr<librg_cpp::Peer> librg_cpp::Message::peer() const {
+    return _peer;
 }
 
 void librg_cpp::Message::setUserData(void *ptr) {

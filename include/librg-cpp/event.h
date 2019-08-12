@@ -52,7 +52,10 @@ namespace librg_cpp {
         [[nodiscard]] void *userData() const;
 
         void reject();
-        [[nodiscard]] bool rejectable() const;
-        [[nodiscard]] bool succeeded() const;
+        [[nodiscard]] bool isRejected() const;
+        [[nodiscard]] bool isSucceeded() const;
+        [[nodiscard]] bool isRejectable() const;
+        [[nodiscard]] bool isRemote() const;
+        [[nodiscard]] bool isLocal() const;
     };
 }
