@@ -32,6 +32,11 @@ librg_cpp::Event::Event(librg_event *event, const std::shared_ptr<Context> &cont
     _event = event;
     _context = context;
     _data = std::make_shared<Data>(_event->data);
+    _entity = context->getEntity(_event->entity);
+
+    if (_event->peer != nullptr) {
+        _peer = context->getPeer(_event->peer);
+    }
 }
 
 uint32_t librg_cpp::Event::id() const {
@@ -46,6 +51,14 @@ std::shared_ptr<librg_cpp::Context> librg_cpp::Event::context() const {
 
 std::shared_ptr<librg_cpp::Data> librg_cpp::Event::data() const {
     return _data;
+}
+
+std::shared_ptr<librg_cpp::Entity> librg_cpp::Event::entity() const {
+    return _entity;
+}
+
+std::shared_ptr<librg_cpp::Peer> librg_cpp::Event::peer() const {
+    return _peer;
 }
 
 uint64_t librg_cpp::Event::flags() const {

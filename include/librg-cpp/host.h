@@ -38,6 +38,7 @@ namespace librg_cpp {
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
 
+        // TODO: Allow multiple callbacks per event/message
         std::map<int, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
         std::map<int, std::function<void(const std::unique_ptr<Message> &)>> _messageCallbacks;
 

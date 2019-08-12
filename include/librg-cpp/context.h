@@ -66,5 +66,6 @@ namespace librg_cpp {
 
         friend class Host;
         friend class Entity;
+        friend class Event;
     };
 }

@@ -26,12 +26,16 @@
 namespace librg_cpp {
     class Data;
     class Context;
+    class Entity;
+    class Peer;
 
     class Event {
     private:
         librg_event *_event;
         std::shared_ptr<Context> _context;
         std::shared_ptr<Data> _data;
+        std::shared_ptr<Entity> _entity;
+        std::shared_ptr<Peer> _peer;
 
     public:
         Event(librg_event *event, const std::shared_ptr<Context> &context);
@@ -40,6 +44,8 @@ namespace librg_cpp {
         [[nodiscard]] uint32_t id() const;
         [[nodiscard]] std::shared_ptr<Context> context() const;
         [[nodiscard]] std::shared_ptr<Data> data() const;
+        [[nodiscard]] std::shared_ptr<Entity> entity() const;
+        [[nodiscard]] std::shared_ptr<Peer> peer() const;
         [[nodiscard]] uint64_t flags() const;
 
         void setUserData(void *ptr);
