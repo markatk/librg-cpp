@@ -59,6 +59,8 @@ namespace librg_cpp {
         void grow(size_t minSize);
         void free();
 
+        void *raw() const;
+
         void setWritePosition(size_t position);
         void setReadPosition(size_t position);
         [[nodiscard]] size_t writePosition() const;

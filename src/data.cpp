@@ -112,6 +112,12 @@ void librg_cpp::Data::free() {
     librg_data_free(_data);
 }
 
+void *librg_cpp::Data::raw() const {
+    assert(_data != nullptr);
+
+    return _data->rawptr;
+}
+
 void librg_cpp::Data::setWritePosition(size_t position) {
     assert(_data != nullptr);
     assert(position >= 0);

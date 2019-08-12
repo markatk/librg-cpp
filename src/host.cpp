@@ -75,6 +75,14 @@ bool librg_cpp::Host::isConnected() const {
     return librg_is_connected(context()) != 0;
 }
 
+void librg_cpp::Host::sendMessageToAll(uint32_t id, void *data, size_t size) {
+    librg_message_send_all(context(), id, data, size);
+}
+
+void librg_cpp::Host::sendMessageInStream(uint32_t id, uint32_t entityId, void *data, size_t size) {
+    librg_message_send_instream(context(), id, entityId, data, size);
+}
+
 void librg_cpp::Host::onConnectionInitialize(const std::unique_ptr<Event> &event) {
     // Do nothing by default
 }

@@ -50,6 +50,9 @@ namespace librg_cpp {
         [[nodiscard]] bool isConnected() const;
 
     protected:
+        void sendMessageToAll(uint32_t id, void *data, size_t size);
+        void sendMessageInStream(uint32_t id, uint32_t entityId, void *data, size_t size);
+
         virtual void onConnectionInitialize(const std::unique_ptr<Event> &event);
         virtual void onConnectionRequest(const std::unique_ptr<Event> &event);
         virtual void onConnectionRefuse(const std::unique_ptr<Event> &event);

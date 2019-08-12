@@ -21,6 +21,7 @@
 #include "client.h"
 
 #include "context.h"
+#include "data.h"
 
 librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
 
@@ -51,4 +52,12 @@ void librg_cpp::Client::disconnect() {
     }
 
     librg_network_stop(context());
+}
+
+void librg_cpp::Client::sendMessage(uint32_t id, void *data, size_t size) {
+    sendMessageToAll(id, data, size);
+}
+
+void librg_cpp::Client::sendMessage(uint32_t id, const std::shared_ptr<Data> &data) {
+    sendMessageToAll(id, data->raw(), data->writePosition());
 }
