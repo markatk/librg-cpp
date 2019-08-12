@@ -34,6 +34,7 @@ namespace librg_cpp {
 
         std::string ip() const;
 
+        friend class Context;
         friend class Host;
         friend class Server;
         friend class Entity;

@@ -22,6 +22,7 @@
 
 #include <librg.h>
 #include <memory>
+#include <vector>
 
 namespace librg_cpp {
     template<class T, class P>
@@ -37,6 +38,8 @@ namespace librg_cpp {
 
         std::shared_ptr<Pool<librg_peer, Peer>> _peerPool;
         std::shared_ptr<Pool<librg_entity, Entity>> _entityPool;
+
+        std::vector<std::shared_ptr<Entity>> _collectEntities;
 
     public:
         explicit Context(bool isServer = true, double tickDelay = 32.0, uint16_t maxClients = 16);
@@ -55,6 +58,11 @@ namespace librg_cpp {
         uint16_t maxClients() const;
         uint16_t maxEntities() const;
 
+        std::shared_ptr<Entity> getEntity(uint32_t id);
+        std::shared_ptr<Entity> getEntity(const std::shared_ptr<Peer> &peer);
+        std::vector<std::shared_ptr<Entity>> getEntities(uint64_t flags);
+        std::vector<std::shared_ptr<Entity>> getStreamedEntities(const std::shared_ptr<Entity> &entity);
+
         double time();
 
         void reset();
@@ -65,6 +73,8 @@ namespace librg_cpp {
 
         std::shared_ptr<Peer> getPeer(librg_peer *peer);
         std::shared_ptr<Entity> getEntity(librg_entity *entity);
+
+        static void collectEntity(struct librg_ctx *context, struct librg_entity *entity);
 
         friend class Host;
         friend class Entity;

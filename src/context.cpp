@@ -24,6 +24,7 @@
 #include "pool.h"
 #include "peer.h"
 #include "entity.h"
+#include "host.h"
 
 #include <cassert>
 
@@ -107,6 +108,49 @@ uint16_t librg_cpp::Context::maxEntities() const {
     return _context.max_entities;
 }
 
+std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(uint32_t id) {
+    auto entity = librg_entity_fetch(&_context, id);
+    if (entity == nullptr) {
+        return nullptr;
+    }
+
+    return getEntity(entity);
+}
+
+std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(const std::shared_ptr<Peer> &peer) {
+    assert(peer != nullptr);
+
+    auto entity = librg_entity_find(&_context, peer->_peer);
+    if (entity == nullptr) {
+        return nullptr;
+    }
+
+    return getEntity(entity);
+}
+
+std::vector<std::shared_ptr<librg_cpp::Entity>> librg_cpp::Context::getEntities(uint64_t flags) {
+    _collectEntities.clear();
+
+    librg_entity_iterate(&_context, flags, collectEntity);
+
+    return _collectEntities;
+}
+
+std::vector<std::shared_ptr<librg_cpp::Entity>> librg_cpp::Context::getStreamedEntities(const std::shared_ptr<Entity> &entity) {
+    assert(entity != nullptr);
+
+    librg_entity_id *result;
+    auto count = librg_entity_query(&_context, entity->id(), &result);
+
+    std::vector<std::shared_ptr<Entity>> entities(count);
+
+    for (size_t i = 0; i < count; i++) {
+        entities.push_back(getEntity(result[i]));
+    }
+
+    return entities;
+}
+
 double librg_cpp::Context::time() {
     return librg_time_now(&_context);
 }
@@ -153,4 +197,19 @@ std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(librg_entity *v
     }
 
     return entity;
+}
+
+void librg_cpp::Context::collectEntity(struct librg_ctx *ctx, struct librg_entity *entity) {
+    assert(ctx != nullptr);
+    assert(entity != nullptr);
+
+    auto context = reinterpret_cast<Host *>(ctx->user_data)->_context;
+    assert(context != nullptr);
+
+    auto wrappedEntity = context->getEntity(entity);
+    if (wrappedEntity == nullptr) {
+        return;
+    }
+
+    context->_collectEntities.push_back(wrappedEntity);
 }

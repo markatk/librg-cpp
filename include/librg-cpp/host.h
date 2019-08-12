@@ -82,5 +82,7 @@ namespace librg_cpp {
     private:
         static void onEvent(librg_event *event);
         static void onMessage(librg_message *message);
+
+        friend class Context;
     };
 }
