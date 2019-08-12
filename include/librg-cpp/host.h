@@ -69,7 +69,9 @@ namespace librg_cpp {
         virtual void onClientStreamerUpdate(const std::unique_ptr<Event> &event);
 
         void registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
+        void unregisterEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback);
         void registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback);
+        void unregisterMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback);
 
         librg_ctx *context() const;
 

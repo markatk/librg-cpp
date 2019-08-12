@@ -153,6 +153,18 @@ void librg_cpp::Host::registerEvent(int id, std::function<void(const std::unique
     _eventCallbacks[id] = std::move(callback);
 }
 
+void librg_cpp::Host::unregisterEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback) {
+    assert(id >= 0);
+    assert(callback != nullptr);
+
+    auto it = _eventCallbacks.find(id);
+    if (it == _eventCallbacks.end()) {
+        return;
+    }
+
+    _eventCallbacks.erase(it);
+}
+
 void librg_cpp::Host::registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback) {
     assert(_context != nullptr);
     assert(id >= LIBRG_EVENT_LAST);
@@ -161,6 +173,19 @@ void librg_cpp::Host::registerMessage(int id, std::function<void(const std::uniq
     _messageCallbacks[id] = std::move(callback);
 
     librg_network_add(context(), id, onMessage);
+}
+
+void librg_cpp::Host::unregisterMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback) {
+    assert(_context != nullptr);
+    assert(id >= LIBRG_EVENT_LAST);
+    assert(callback != nullptr);
+
+    auto it = _messageCallbacks.find(id);
+    if (it == _messageCallbacks.end()) {
+        return;
+    }
+
+    _messageCallbacks.erase(it);
 }
 
 librg_ctx *librg_cpp::Host::context() const {
