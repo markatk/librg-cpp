@@ -55,6 +55,8 @@ namespace librg_cpp {
         unsigned short maxClients() const;
         unsigned short maxEntities() const;
 
+        double time();
+
         void reset();
 
     private:

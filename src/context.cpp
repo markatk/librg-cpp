@@ -107,6 +107,10 @@ unsigned short librg_cpp::Context::maxEntities() const {
     return _context.max_entities;
 }
 
+double librg_cpp::Context::time() {
+    return librg_time_now(&_context);
+}
+
 void librg_cpp::Context::reset() {
     _context.mode = LIBRG_MODE_SERVER;
     _context.tick_delay = 32;
