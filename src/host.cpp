@@ -26,6 +26,7 @@
 
 #include <cassert>
 #include <utility>
+#include <memory>
 
 librg_cpp::Host::Host(std::shared_ptr<Context> context) {
     assert(context != nullptr);
@@ -165,7 +166,8 @@ void librg_cpp::Host::onEvent(librg_event *event) {
     }
 
     // wrap event
-    auto wrappedEvent = std::make_unique<Event>(event, host->_context);
+    // Do not use std::make_unique to be C++11 compliant
+    auto wrappedEvent = std::unique_ptr<Event>(new Event(event, host->_context));
 
     callback(wrappedEvent);
 }
@@ -180,7 +182,8 @@ void librg_cpp::Host::onMessage(librg_message *message) {
     }
 
     // wrap event
-    auto wrappedMessage = std::make_unique<Message>(message, host->_context);
+    // Do not use std::make_unique to be C++11 compliant
+    auto wrappedMessage = std::unique_ptr<Message>(new Message(message, host->_context));
 
     callback(wrappedMessage);
 }
