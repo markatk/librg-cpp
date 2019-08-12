@@ -21,6 +21,9 @@
 #include "server.h"
 
 #include "context.h"
+#include "peer.h"
+
+#include <cassert>
 
 librg_cpp::Server::Server(std::shared_ptr<Context> context, int port, const std::string &host) : librg_cpp::Host(std::move(context)) {
     setPort(port);
@@ -32,6 +35,8 @@ librg_cpp::Server::~Server() {
 }
 
 int librg_cpp::Server::start() {
+    assert(_context != nullptr);
+
     if (_context->isInitialized() == false) {
         return -1;
     }
@@ -44,6 +49,8 @@ int librg_cpp::Server::start() {
 }
 
 void librg_cpp::Server::stop() {
+    assert(_context != nullptr);
+
     if (isConnected() == false) {
         return;
     }
@@ -51,7 +58,16 @@ void librg_cpp::Server::stop() {
     librg_network_stop(context());
 }
 
+void librg_cpp::Server::kick(const std::shared_ptr<Peer> &peer) {
+    assert(_context != nullptr);
+    assert(peer != nullptr);
+
+    librg_network_kick(context(), peer->_peer);
+}
+
 void librg_cpp::Server::setPort(int port) {
+    assert(port >= 0);
+
     _address.port = port;
 }
 

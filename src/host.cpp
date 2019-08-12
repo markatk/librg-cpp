@@ -69,18 +69,28 @@ librg_cpp::Host::Host(std::shared_ptr<Context> context) {
 }
 
 void librg_cpp::Host::tick() {
+    assert(_context != nullptr);
+
     librg_tick(context());
 }
 
 bool librg_cpp::Host::isConnected() const {
+    assert(_context != nullptr);
+
     return librg_is_connected(context()) != 0;
 }
 
 void librg_cpp::Host::sendMessageToAll(uint32_t id, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(data != nullptr);
+
     librg_message_send_all(context(), id, data, size);
 }
 
 void librg_cpp::Host::sendMessageInStream(uint32_t id, uint32_t entityId, void *data, size_t size) {
+    assert(_context != nullptr);
+    assert(data != nullptr);
+
     librg_message_send_instream(context(), id, entityId, data, size);
 }
 
@@ -138,12 +148,15 @@ void librg_cpp::Host::onClientStreamerUpdate(const std::unique_ptr<Event> &event
 
 void librg_cpp::Host::registerEvent(int id, std::function<void(const std::unique_ptr<Event> &)> callback) {
     assert(id >= 0);
+    assert(callback != nullptr);
 
     _eventCallbacks[id] = std::move(callback);
 }
 
 void librg_cpp::Host::registerMessage(int id, std::function<void(const std::unique_ptr<Message> &)> callback) {
+    assert(_context != nullptr);
     assert(id >= LIBRG_EVENT_LAST);
+    assert(callback != nullptr);
 
     _messageCallbacks[id] = std::move(callback);
 
@@ -157,6 +170,8 @@ librg_ctx *librg_cpp::Host::context() const {
 }
 
 void librg_cpp::Host::onEvent(librg_event *event) {
+    assert(event != nullptr);
+
     auto host = reinterpret_cast<Host *>(event->ctx->user_data);
     assert(host != nullptr);
 
@@ -173,6 +188,8 @@ void librg_cpp::Host::onEvent(librg_event *event) {
 }
 
 void librg_cpp::Host::onMessage(librg_message *message) {
+    assert(message != nullptr);
+
     auto host = reinterpret_cast<Host *>(message->ctx->user_data);
     assert(host != nullptr);
 

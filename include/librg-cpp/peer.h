@@ -32,6 +32,7 @@ namespace librg_cpp {
         virtual ~Peer() = default;
 
         friend class Host;
+        friend class Server;
         friend class Entity;
     };
 }

@@ -28,6 +28,8 @@
 #include <cassert>
 
 librg_cpp::Context::Context(bool isServer, double tickDelay, unsigned short maxClients) : _context({0}) {
+    assert(tickDelay > 0);
+
     _initialized = false;
     _peerPool = std::make_shared<Pool<librg_peer, Peer>>();
     _entityPool = std::make_shared<Pool<librg_entity, Entity>>();
@@ -76,6 +78,8 @@ void librg_cpp::Context::setServer(bool isServer) {
 }
 
 void librg_cpp::Context::setTickDelay(double delay) {
+    assert(delay > 0);
+
     _context.tick_delay = delay;
 }
 

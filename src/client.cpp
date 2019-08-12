@@ -23,6 +23,8 @@
 #include "context.h"
 #include "data.h"
 
+#include <cassert>
+
 librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
 
 }
@@ -32,6 +34,9 @@ librg_cpp::Client::~Client() {
 }
 
 int librg_cpp::Client::connect(const std::string &host, int port) {
+    assert(_context != nullptr);
+    assert(port >= 0);
+
     if (_context->isInitialized() == false) {
         return -1;
     }
@@ -52,6 +57,8 @@ int librg_cpp::Client::connect(const std::string &host, int port) {
 }
 
 void librg_cpp::Client::disconnect() {
+    assert(_context != nullptr);
+
     if (isConnected() == false) {
         return;
     }
@@ -60,9 +67,13 @@ void librg_cpp::Client::disconnect() {
 }
 
 void librg_cpp::Client::sendMessage(uint32_t id, void *data, size_t size) {
+    assert(data != nullptr);
+
     sendMessageToAll(id, data, size);
 }
 
 void librg_cpp::Client::sendMessage(uint32_t id, const std::shared_ptr<Data> &data) {
+    assert(data != nullptr);
+
     sendMessageToAll(id, data->raw(), data->writePosition());
 }

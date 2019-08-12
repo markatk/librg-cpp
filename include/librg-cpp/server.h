@@ -25,6 +25,8 @@
 #include <string>
 
 namespace librg_cpp {
+    class Peer;
+
     class Server : public Host {
     public:
         Server(std::shared_ptr<Context> context, int port, const std::string &host = "::1");
@@ -32,6 +34,8 @@ namespace librg_cpp {
 
         int start();
         void stop();
+
+        void kick(const std::shared_ptr<Peer> &peer);
 
         void setPort(int port);
         void setHost(const std::string &host);
