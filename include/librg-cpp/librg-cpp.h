@@ -20,9 +20,6 @@
 
 #pragma once
 
-#define LIBRG_DEBUG
-#define LIBRG_IMPLEMENTATION
-
 #include "version.h"
 #include "result.h"
 #include "data.h"

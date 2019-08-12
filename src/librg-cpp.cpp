@@ -19,3 +19,8 @@
  */
 
 #include "librg-cpp.h"
+
+#define LIBRG_DEBUG
+#define LIBRG_IMPLEMENTATION
+
+#include <librg.h>
