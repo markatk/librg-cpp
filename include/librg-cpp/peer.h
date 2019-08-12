@@ -21,6 +21,7 @@
 #pragma once
 
 #include <librg.h>
+#include <string>
 
 namespace librg_cpp {
     class Peer {
@@ -30,6 +31,8 @@ namespace librg_cpp {
     public:
         explicit Peer(librg_peer *peer);
         virtual ~Peer() = default;
+
+        std::string ip() const;
 
         friend class Host;
         friend class Server;

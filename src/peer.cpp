@@ -22,8 +22,23 @@
 
 #include <cassert>
 
+#define HOST_NAME_LENGTH 32
+
 librg_cpp::Peer::Peer(librg_peer *peer) {
     assert(peer != nullptr);
 
     _peer = peer;
+}
+
+std::string librg_cpp::Peer::ip() const {
+    assert(_peer != nullptr);
+
+    char hostname[HOST_NAME_LENGTH + 1];
+    std::string address = "unknown";
+
+    if (enet_address_get_host_ip(&_peer->address, hostname, HOST_NAME_LENGTH) == 0) {
+        address = std::string(hostname);
+    }
+
+    return address;
 }
