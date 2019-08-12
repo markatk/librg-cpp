@@ -41,7 +41,12 @@ int librg_cpp::Client::connect(const std::string &host, int port) {
     }
 
     _address.port = port;
+
+#ifdef WIN32
     strcpy_s(_address.host, MAX_HOST_LENGTH, host.c_str());
+#else
+    strncpy(_address.host, host.c_str(), MAX_HOST_LENGTH);
+#endif
 
     return librg_network_start(context(), _address);
 }

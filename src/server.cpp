@@ -56,7 +56,11 @@ void librg_cpp::Server::setPort(int port) {
 }
 
 void librg_cpp::Server::setHost(const std::string &host) {
-    strcpy_s(_host, MAX_HOST_LENGTH + 1, host.c_str());
+#ifdef WIN32
+    strcpy_s(_host, MAX_HOST_LENGTH, host.c_str());
+#else
+    strncpy(_host, host.c_str(), MAX_HOST_LENGTH);
+#endif
 }
 
 int librg_cpp::Server::port() const {
