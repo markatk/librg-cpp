@@ -25,7 +25,7 @@
 #define GEN_DATA_METHODS(NAME, TYPE, FUNC) void librg_cpp::Data::write ## NAME (TYPE value) { assert(_data != nullptr); librg_data_w ## FUNC (_data, value); } \
     void librg_cpp::Data::write ## NAME ## At(TYPE value, size_t pos) { assert(_data != nullptr); assert(pos >= 0); librg_data_w ## FUNC ## _at(_data, value, pos); } \
     TYPE librg_cpp::Data::read ## NAME () { assert(_data != nullptr); return librg_data_r ## FUNC (_data); } \
-    TYPE librg_cpp::Data::read ## NAME ## At(size_t pos) { assert(data != nullptr); assert(pos >= 0); return librg_data_r ## FUNC ## _at(_data, pos); }
+    TYPE librg_cpp::Data::read ## NAME ## At(size_t pos) { assert(_data != nullptr); assert(pos >= 0); return librg_data_r ## FUNC ## _at(_data, pos); }
 
 librg_cpp::Data::Data() {
     _data = librg_data_init_new();

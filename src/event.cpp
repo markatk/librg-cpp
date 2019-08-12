@@ -40,7 +40,7 @@ librg_cpp::Event::Event(librg_event *event, const std::shared_ptr<Context> &cont
 }
 
 uint32_t librg_cpp::Event::id() const {
-    assert(event != nullptr);
+    assert(_event != nullptr);
 
     return _event->id;
 }
