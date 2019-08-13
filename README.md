@@ -12,7 +12,13 @@ C++ wrapper for [librg](https://github.com/librg/librg) network library
 
 ## Documentation
 
-Documentation will be added when first stable release is ready.
+Documentation can be found on [github.io](https://markatk.github.io/librg-cpp/).
+
+The documentation is build with CMake and will be located in docs/html when building local.
+
+## Example
+
+Examples needs to be added.
 
 ## License
 
