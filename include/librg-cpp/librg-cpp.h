@@ -20,6 +20,8 @@
 
 #pragma once
 
+// TODO: Add linalg with cmake option to replace with zpl_vec3
+
 #include "version.h"
 #include "result.h"
 #include "data.h"

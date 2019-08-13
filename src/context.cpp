@@ -162,7 +162,6 @@ void librg_cpp::Context::reset() {
     _context.min_branch_size = zpl_vec3f(50.f, 50.f, 50.f);
     _context.max_connections = 16;
     _context.max_entities = 8192;
-    _context.user_data = nullptr;
 }
 
 void librg_cpp::Context::setUserData(void *ptr) {
