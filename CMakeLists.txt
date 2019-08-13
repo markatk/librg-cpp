@@ -9,6 +9,7 @@ project(LIBRG_CPP VERSION ${BUILD_VERSION})
 # Build options
 option(BUILD_TESTS "Build the library tests" ON)
 option(BUILD_EXAMPLES "Build the library examples" ON)
+option(BUILD_DOCS "Build the library documentation" ON)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -32,4 +33,8 @@ endif()
 
 if(BUILD_EXAMPLES)
     add_subdirectory(examples)
+endif()
+
+if(BUILD_DOCS)
+    add_subdirectory(docs)
 endif()
