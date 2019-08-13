@@ -9,7 +9,7 @@ project(LIBRG_CPP VERSION ${BUILD_VERSION})
 # Build options
 option(BUILD_TESTS "Build the library tests" ON)
 option(BUILD_EXAMPLES "Build the library examples" ON)
-option(BUILD_DOCS "Build the library documentation" ON)
+option(BUILD_DOCS "Build the library documentation" OFF)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
