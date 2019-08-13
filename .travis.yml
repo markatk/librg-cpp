@@ -14,13 +14,13 @@ addons:
 
 script:
   - mkdir build && cd build
-  - cmake ..
+  - cmake -DBUILD_DOCS=OFF ..
   - make && make test
 
 jobs:
   include:
     - stage: Deploy
-      script: doxygen Doxyfile
+      script: mkdir build && cd build && cmake -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF .. && make Doxygen
       compiler: gcc
       os: linux
       deploy:
