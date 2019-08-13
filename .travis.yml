@@ -17,14 +17,16 @@ script:
   - cmake ..
   - make && make test
 
-after_success:
-  - cd ..
-  - doxygen Doxyfile
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  local_dir: docs/html
-  github_token: $GH_REPO_TOKEN
-  on:
-    branch: master
+jobs:
+  include:
+    - stage: Deploy
+      script: doxygen Doxyfile
+      compiler: gcc
+      os: linux
+      deploy:
+        provider: pages
+        skip_cleanup: true
+        local_dir: docs/html
+        github_token: $GH_REPO_TOKEN
+        on:
+          branch: master
