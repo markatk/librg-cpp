@@ -48,10 +48,12 @@ librg_cpp::Context::~Context() {
 
 int librg_cpp::Context::initialize() {
     if (isInitialized()) {
+        // TODO: Use results
         return -1;
     }
 
     if (librg_init(&_context) != 0) {
+        // TODO: Use results
         return -1;
     }
 

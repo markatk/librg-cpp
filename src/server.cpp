@@ -39,13 +39,16 @@ uint32_t librg_cpp::Server::start() {
     assert(_context != nullptr);
 
     if (_context->isInitialized() == false) {
+        // TODO: Use results
         return -1;
     }
 
     if (isConnected()) {
+        // TODO: Use results
         return -1;
     }
 
+    // TODO: Use results
     return librg_network_start(context(), _address);
 }
 

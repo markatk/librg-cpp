@@ -120,7 +120,7 @@ namespace librg_cpp {
          * This limits the number of entities managed by the server at the same time.
          * Default value is 8192.
          *
-         * @param maxClients Maximum number of entities.
+         * @param maxEntities Maximum number of entities.
          */
         void setMaxEntities(uint16_t maxEntities);
 

@@ -24,9 +24,10 @@
 #include "data.h"
 
 #include <cassert>
+#include <utility>
 
 librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
-
+    assert(context->isServer() == false);
 }
 
 librg_cpp::Client::~Client() {
@@ -38,10 +39,12 @@ int librg_cpp::Client::connect(const std::string &host, int32_t port) {
     assert(port >= 0);
 
     if (_context->isInitialized() == false) {
+        // TODO: Use results
         return -1;
     }
 
     if (isConnected()) {
+        // TODO: Use results
         return -1;
     }
 
@@ -53,6 +56,7 @@ int librg_cpp::Client::connect(const std::string &host, int32_t port) {
     strncpy(_address.host, host.c_str(), MAX_HOST_LENGTH);
 #endif
 
+    // TODO: Use results
     return librg_network_start(context(), _address);
 }
 

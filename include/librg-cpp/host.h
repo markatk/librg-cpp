@@ -34,12 +34,14 @@ namespace librg_cpp {
     class Peer;
     class Entity;
 
+    // TODO: Make host abstract and use as protected in subclasses
     class Host {
     protected:
         std::shared_ptr<Context> _context;
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
 
+    private:
         std::map<uint32_t, std::function<void(const std::unique_ptr<Event> &)>> _eventCallbacks;
         std::map<uint16_t, std::function<void(const std::unique_ptr<Message> &)>> _messageCallbacks;
 
