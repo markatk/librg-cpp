@@ -20,7 +20,9 @@
 
 #pragma once
 
-// TODO: Add linalg with cmake option to replace with zpl_vec3
+#ifdef LIBRG_CPP_USE_LINALG
+#include <linalg.h>
+#endif
 
 #include "version.h"
 #include "result.h"

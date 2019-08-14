@@ -24,6 +24,10 @@
 #include <memory>
 #include <vector>
 
+#ifdef LIBRG_CPP_USE_LINALG
+#include <linalg.h>
+#endif
+
 namespace librg_cpp {
     template<class T, class P>
     class Pool;
@@ -124,8 +128,6 @@ namespace librg_cpp {
          */
         void setMaxEntities(uint16_t maxEntities);
 
-        // TODO: Add worldsize and minbranchsize setters/getters
-
         /**
          * Check whether the context is for a server.
          *
@@ -153,6 +155,68 @@ namespace librg_cpp {
          * @return Maximum number of entities.
          */
         uint16_t maxEntities() const;
+
+#ifdef LIBRG_CPP_USE_LINALG
+        /**
+         * Set world size.
+         *
+         * Entities position are limited to the world size.
+         *
+         * @param size Size of the world.
+         */
+        void setWorldSize(linalg::aliases::float3 size);
+
+        /**
+         * Set the minimum branch size.
+         *
+         * @param size Minimum size of branches.
+         */
+        void setMinBranchSize(linalg::aliases::float3 size);
+
+        /**
+         * Get the world size.
+         *
+         * @return Size of the world.
+         */
+        linalg::aliases::float3 worldSize() const;
+
+        /**
+         * Get the minimum branch size.
+         *
+         * @return Minimum size of branches.
+         */
+        linalg::aliases::float3 minBranchSize() const;
+#else
+        /**
+         * Set world size.
+         *
+         * Entities position are limited to the world size.
+         *
+         * @param size Size of the world.
+         */
+        void setWorldSize(zpl_vec3 size);
+
+        /**
+         * Set the minimum branch size.
+         *
+         * @param size Minimum size of branches.
+         */
+        void setMinBranchSize(zpl_vec3 size);
+
+        /**
+         * Get the world size.
+         *
+         * @return Size of the world.
+         */
+        zpl_vec3 worldSize() const;
+
+        /**
+         * Get the minimum branch size.
+         *
+         * @return Minimum size of branches.
+         */
+        zpl_vec3 minBranchSize() const;
+#endif
 
         /**
          * Get an entity by it's id.

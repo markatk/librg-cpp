@@ -71,6 +71,32 @@ uint64_t librg_cpp::Entity::flags() const {
     return _entity->flags;
 }
 
+#ifdef LIBRG_CPP_USE_LINALG
+void librg_cpp::Entity::setPosition(linalg::aliases::float3 position) {
+    assert(_entity != nullptr);
+
+    _entity->position = zpl_vec3f(position.x, position.y, position.z);
+}
+
+linalg::aliases::float3 librg_cpp::Entity::position() const {
+    assert(_entity != nullptr);
+
+    return linalg::aliases::float3(_entity->position.x, _entity->position.y, _entity->position.z);
+}
+#else
+void librg_cpp::Entity::setPosition(zpl_vec3 position) {
+    assert(_entity != nullptr);
+
+    _entity->position = position;
+}
+
+zpl_vec3 librg_cpp::Entity::position() const {
+    assert(_entity != nullptr);
+
+    return _entity->position;
+}
+#endif
+
 void librg_cpp::Entity::setControlPeer(const std::shared_ptr<Peer> &peer) {
     assert(_entity != nullptr);
     assert(peer != nullptr);
@@ -126,6 +152,20 @@ librg_visibility librg_cpp::Entity::visibilityFor(const std::shared_ptr<Entity> 
     assert(target != nullptr);
 
     return librg_entity_visibility_get_for(&_context->_context, id(), target->id());
+}
+#endif
+
+#ifdef LIBRG_FEATURE_VIRTUAL_WORLDS
+void librg_cpp::Entity::setWorld(uint32_t world) {
+    assert(_entity != nullptr);
+
+    librg_entity_world_set(&_context->_context, id(), world);
+}
+
+uint32_t librg_cpp::Entity::world() const {
+    assert(_entity != nullptr);
+
+    return librg_entity_world_get(&_context->_context, id());
 }
 #endif
 

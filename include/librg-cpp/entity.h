@@ -23,6 +23,10 @@
 #include <librg.h>
 #include <memory>
 
+#ifdef LIBRG_CPP_USE_LINALG
+#include <linalg.h>
+#endif
+
 namespace librg_cpp {
     class Context;
     class Peer;
@@ -42,7 +46,13 @@ namespace librg_cpp {
         uint32_t type() const;
         uint64_t flags() const;
 
-        // TODO: Add position
+#ifdef LIBRG_CPP_USE_LINALG
+        void setPosition(linalg::aliases::float3 position);
+        linalg::aliases::float3 position() const;
+#else
+        void setPosition(zpl_vec3 position);
+        zpl_vec3 position() const;
+#endif
 
         void setControlPeer(const std::shared_ptr<Peer> &peer);
         void removeControlPeer();

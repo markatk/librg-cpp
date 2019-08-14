@@ -7,3 +7,6 @@
 [submodule "thirdparty/zpl_librg"]
 	path = thirdparty/zpl_librg
 	url = https://github.com/zpl-c/zpl.git
+[submodule "thirdparty/linalg"]
+	path = thirdparty/linalg
+	url = https://github.com/sgorsten/linalg.git

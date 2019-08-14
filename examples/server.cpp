@@ -37,6 +37,8 @@ protected:
 
     void onConnectionAccept(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Connection accepted" << std::endl;
+
+        event->entity()->setPosition(linalg::aliases::float3(1.f, 2.f, 3.f));
     }
 
     void onConnectionDisconnect(const std::unique_ptr<librg_cpp::Event> &event) override {

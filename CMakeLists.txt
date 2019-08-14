@@ -11,6 +11,8 @@ option(BUILD_TESTS "Build the library tests" ON)
 option(BUILD_EXAMPLES "Build the library examples" ON)
 option(BUILD_DOCS "Build the library documentation" OFF)
 
+option(USE_LINALG "Use linalg math library" ON)
+
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
@@ -23,6 +25,11 @@ set(LIBRG_POSTFIX _librg)
 
 add_subdirectory(thirdparty/librg)
 
+if(USE_LINALG)
+    add_definitions(-DLIBRG_CPP_USE_LINALG)
+endif()
+
+# Add targets
 add_subdirectory(src)
 
 if(BUILD_TESTS)

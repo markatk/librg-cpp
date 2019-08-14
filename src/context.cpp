@@ -110,6 +110,40 @@ uint16_t librg_cpp::Context::maxEntities() const {
     return _context.max_entities;
 }
 
+#ifdef LIBRG_CPP_USE_LINALG
+void librg_cpp::Context::setWorldSize(linalg::aliases::float3 size) {
+    _context.world_size = zpl_vec3f(size.x, size.y, size.z);
+}
+
+void librg_cpp::Context::setMinBranchSize(linalg::aliases::float3 size) {
+    _context.min_branch_size = zpl_vec3f(size.x, size.y, size.z);
+}
+
+linalg::aliases::float3 librg_cpp::Context::worldSize() const {
+    return { _context.world_size.x, _context.world_size.y, _context.world_size.z };
+}
+
+linalg::aliases::float3 librg_cpp::Context::minBranchSize() const {
+    return { _context.min_branch_size.x, _context.min_branch_size.y, _context.min_branch_size.z };
+}
+#else
+void librg_cpp::Context::setWorldSize(zpl_vec3 size) {
+    _context.world_size = size;
+}
+
+void librg_cpp::Context::setMinBranchSize(zpl_vec3 size) {
+    _context.min_branch_size = size;
+}
+
+zpl_vec3 librg_cpp::Context::worldSize() const {
+    return _context.world_size;
+}
+
+zpl_vec3 librg_cpp::Context::minBranchSize() const {
+    return _context.min_branch_size;
+}
+#endif
+
 std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(uint32_t id) {
     auto entity = librg_entity_fetch(&_context, id);
     if (entity == nullptr) {
