@@ -211,7 +211,7 @@ std::shared_ptr<librg_cpp::Peer> librg_cpp::Context::getPeer(librg_peer *value) 
 
     auto peer = _peerPool->get(value);
     if (peer == nullptr) {
-        peer = std::make_shared<Peer>(value);
+        peer = std::shared_ptr<Peer>(new Peer(value));
 
         _peerPool->add(value, peer);
     }
@@ -224,7 +224,7 @@ std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(librg_entity *v
 
     auto entity = _entityPool->get(value);
     if (entity == nullptr) {
-        entity = std::make_shared<Entity>(value, shared_from_this());
+        entity = std::shared_ptr<Entity>(new Entity(value, shared_from_this()));
 
         _entityPool->add(value, entity);
     }

@@ -22,17 +22,33 @@
 
 #include <librg.h>
 #include <string>
+#include <memory>
 
 namespace librg_cpp {
+    /**
+     * Peer represents a network peer connection.
+     */
     class Peer {
     private:
         librg_peer *_peer;
 
     public:
-        explicit Peer(librg_peer *peer);
+        /**
+         * Cleanup peer.
+         */
         virtual ~Peer() = default;
 
+        /**
+         * Get IP address of the peer.
+         *
+         * If the address can not be resolved "unknown" is returned.
+         *
+         * @return Resolved address of the peer.
+         */
         std::string ip() const;
+
+    private:
+        explicit Peer(librg_peer *peer);
 
         friend class Context;
         friend class Host;

@@ -36,7 +36,6 @@ namespace librg_cpp {
         std::shared_ptr<Peer> _peer;
 
     public:
-        Message(librg_message *message, const std::shared_ptr<Context> &context);
         virtual ~Message() = default;
 
         uint32_t id() const;
@@ -46,5 +45,10 @@ namespace librg_cpp {
 
         void setUserData(void *ptr);
         void *userData() const;
+
+    private:
+        Message(librg_message *message, const std::shared_ptr<Context> &context);
+
+        friend class Host;
     };
 }

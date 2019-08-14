@@ -29,6 +29,7 @@
 namespace librg_cpp {
     class Context;
 
+    // TODO: Pool is private and should not be visible to users
     template<class T, class P>
     class Pool {
     private:

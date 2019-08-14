@@ -29,6 +29,8 @@ namespace librg_cpp {
 
     /**
      * Client class.
+     *
+     * In most cases create a subclass and overwrite existing event methods of this to handle incoming network events.
      */
     class Client : public Host {
     public:

@@ -20,11 +20,11 @@
 
 #include "utility.h"
 
-void librg_cpp::setOption(uint32_t option, uint32_t value) {
+void librg_cpp::setOption(librg_options option, uint32_t value) {
     librg_option_set(option, value);
 }
 
-uint32_t librg_cpp::getOption(uint32_t option) {
+uint32_t librg_cpp::getOption(librg_options option) {
     return librg_option_get(option);
 }
 

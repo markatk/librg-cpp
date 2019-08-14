@@ -39,7 +39,6 @@ namespace librg_cpp {
 
     public:
         Entity(uint32_t type, const std::shared_ptr<Context> &context);
-        Entity(librg_entity *entity, const std::shared_ptr<Context> &context);
         virtual ~Entity();
 
         uint32_t id() const;
@@ -79,5 +78,10 @@ namespace librg_cpp {
         bool isControlRequested() const;
         bool isMarkedRemoval() const;
         bool isUnused() const;
+
+    private:
+        Entity(librg_entity *entity, const std::shared_ptr<Context> &context);
+
+        friend class Context;
     };
 }

@@ -24,8 +24,27 @@
 #include <vector>
 
 namespace librg_cpp {
-    void setOption(uint32_t option, uint32_t value);
-    uint32_t getOption(uint32_t option);
+    /**
+     * Set the global option.
+     *
+     * @param option Option to set the value for.
+     * @param value Value to set for given option.
+     */
+    void setOption(librg_options option, uint32_t value);
 
+    /**
+     * Get the global option.
+     *
+     * @param option Option to get the value of.
+     * @return Value of the given option.
+     */
+    uint32_t getOption(librg_options option);
+
+    /**
+     * Calculate standard deviation from given values.
+     *
+     * @param values Values to get standard deviation for.
+     * @return Standard deviation of the given values.
+     */
     double standardDeviation(std::vector<double> values);
 }
