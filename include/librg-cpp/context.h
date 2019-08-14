@@ -74,7 +74,7 @@ namespace librg_cpp {
          * 
          * @return
          */
-        int initialize();
+        uint32_t initialize();
 
         /**
          * Cleanup the context.

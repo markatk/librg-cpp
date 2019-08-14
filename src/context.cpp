@@ -46,15 +46,13 @@ librg_cpp::Context::~Context() {
     deinitialize();
 }
 
-int librg_cpp::Context::initialize() {
+uint32_t librg_cpp::Context::initialize() {
     if (isInitialized()) {
-        // TODO: Use results
-        return -1;
+        return LIBRG_CPP_CONTEXT_ALREADY_INITIALIZED;
     }
 
     if (librg_init(&_context) != 0) {
-        // TODO: Use results
-        return -1;
+        return LIBRG_CPP_CONTEXT_INITIALIZE_FAILED;
     }
 
     _initialized = true;

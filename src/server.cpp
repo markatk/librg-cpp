@@ -23,6 +23,7 @@
 #include "context.h"
 #include "peer.h"
 #include "data.h"
+#include "result.h"
 
 #include <cassert>
 
@@ -39,17 +40,22 @@ uint32_t librg_cpp::Server::start() {
     assert(_context != nullptr);
 
     if (_context->isInitialized() == false) {
-        // TODO: Use results
-        return -1;
+        return LIBRG_CPP_CONTEXT_UNINITIALIZED;
     }
 
     if (isConnected()) {
-        // TODO: Use results
-        return -1;
+        return LIBRG_CPP_SERVER_ALREADY_STARTED;
     }
 
-    // TODO: Use results
-    return librg_network_start(context(), _address);
+    auto result = librg_network_start(context(), _address);
+    if (result == 0) {
+        return LIBRG_CPP_NO_ERROR;
+    } else if (result == -1) {
+        return LIBRG_CPP_HOST_CREATION_FAILED;
+    }
+
+    // This should only be returned when librg changes error messages
+    return LIBRG_CPP_UNKNOWN_ERROR;
 }
 
 void librg_cpp::Server::stop() {

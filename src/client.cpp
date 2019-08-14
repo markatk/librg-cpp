@@ -23,8 +23,10 @@
 #include "context.h"
 #include "data.h"
 
+#include "result.h"
+#include "utility.h"
+
 #include <cassert>
-#include <utility>
 
 librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
     assert(context->isServer() == false);
@@ -39,13 +41,11 @@ int librg_cpp::Client::connect(const std::string &host, int32_t port) {
     assert(port >= 0);
 
     if (_context->isInitialized() == false) {
-        // TODO: Use results
-        return -1;
+        return LIBRG_CPP_CONTEXT_UNINITIALIZED;
     }
 
     if (isConnected()) {
-        // TODO: Use results
-        return -1;
+        return LIBRG_CPP_CLIENT_ALREADY_CONNECTED;
     }
 
     _address.port = port;
@@ -56,8 +56,17 @@ int librg_cpp::Client::connect(const std::string &host, int32_t port) {
     strncpy(_address.host, host.c_str(), MAX_HOST_LENGTH);
 #endif
 
-    // TODO: Use results
-    return librg_network_start(context(), _address);
+    auto result = librg_network_start(context(), _address);
+    if (result == 0) {
+        return LIBRG_CPP_NO_ERROR;
+    } else if (result == -1) {
+        return LIBRG_CPP_HOST_CREATION_FAILED;
+    } else if (result == -2) {
+        return LIBRG_CPP_CLIENT_PEER_CREATION_FAILED;
+    }
+
+    // This should only be returned when librg changes error messages
+    return LIBRG_CPP_UNKNOWN_ERROR;
 }
 
 void librg_cpp::Client::disconnect() {
