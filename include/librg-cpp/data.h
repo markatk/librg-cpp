@@ -22,9 +22,13 @@
 
 #include <librg.h>
 
-#define DECL_DATA_METHODS(NAME, TYPE) void write ## NAME (TYPE value); \
+#define DECL_DATA_METHODS(NAME, TYPE) /** Write TYPE to the data. @param value Value to write to the data. */ \
+    void write ## NAME (TYPE value); \
+    /** Write TYPE to the data at given position. @param value Value to write to the data. @param position Position to write the data at. */ \
     void write ## NAME ## At(TYPE value, size_t position); \
+    /** Read TYPE from the data. */ \
     TYPE read ## NAME (); \
+    /** Read TYPE from the data at the given position. @param position Position to read the data at. */ \
     TYPE read ## NAME ## At (size_t position)
 
 namespace librg_cpp {
