@@ -47,10 +47,7 @@ librg_cpp::Entity::~Entity() {
         return;
     }
 
-    assert(_entity != nullptr);
-    assert(_context != nullptr);
-
-    librg_entity_destroy(&_context->_context, id());
+    destroy();
 }
 
 uint32_t librg_cpp::Entity::id() const {
@@ -81,7 +78,7 @@ void librg_cpp::Entity::setPosition(linalg::aliases::float3 position) {
 linalg::aliases::float3 librg_cpp::Entity::position() const {
     assert(_entity != nullptr);
 
-    return linalg::aliases::float3(_entity->position.x, _entity->position.y, _entity->position.z);
+    return { _entity->position.x, _entity->position.y, _entity->position.z };
 }
 #else
 void librg_cpp::Entity::setPosition(zpl_vec3 position) {
@@ -100,24 +97,32 @@ zpl_vec3 librg_cpp::Entity::position() const {
 void librg_cpp::Entity::setControlPeer(const std::shared_ptr<Peer> &peer) {
     assert(_entity != nullptr);
     assert(peer != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     librg_entity_control_set(&_context->_context, id(), peer->_peer);
 }
 
 void librg_cpp::Entity::removeControlPeer() {
     assert(_entity != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     librg_entity_control_remove(&_context->_context, id());
 }
 
 void librg_cpp::Entity::ignoreNextControlUpdate() {
     assert(_entity != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     librg_entity_control_ignore_next_update(&_context->_context, id());
 }
 
 std::shared_ptr<librg_cpp::Peer> librg_cpp::Entity::controlPeer() const {
     assert(_entity != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     auto peer = librg_entity_control_get(&_context->_context, id());
     if (peer == nullptr) {
@@ -130,12 +135,16 @@ std::shared_ptr<librg_cpp::Peer> librg_cpp::Entity::controlPeer() const {
 #ifdef LIBRG_FEATURE_ENTITY_VISIBILITY
 void librg_cpp::Entity::setVisibility(librg_visibility state) {
     assert(_entity != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     librg_entity_visibility_set(&_context->_context, id(), state);
 }
 
 librg_visibility librg_cpp::Entity::visibility() const {
     assert(_entity != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     return librg_entity_visibility_get(&_context->_context, id());
 }
@@ -143,6 +152,8 @@ librg_visibility librg_cpp::Entity::visibility() const {
 void librg_cpp::Entity::setVisibilityFor(const std::shared_ptr<Entity> &target, librg_visibility state) {
     assert(_entity != nullptr);
     assert(target != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     librg_entity_visibility_set_for(&_context->_context, id(), target->id(), state);
 }
@@ -150,6 +161,8 @@ void librg_cpp::Entity::setVisibilityFor(const std::shared_ptr<Entity> &target, 
 librg_visibility librg_cpp::Entity::visibilityFor(const std::shared_ptr<Entity> &target) const {
     assert(_entity != nullptr);
     assert(target != nullptr);
+    assert(_context != nullptr);
+    assert(_context->isServer());
 
     return librg_entity_visibility_get_for(&_context->_context, id(), target->id());
 }
@@ -169,12 +182,6 @@ uint32_t librg_cpp::Entity::world() const {
 }
 #endif
 
-bool librg_cpp::Entity::isAlive() const {
-    assert(_entity != nullptr);
-
-    return _entity->flags & (uint64_t) LIBRG_ENTITY_ALIVE;
-}
-
 bool librg_cpp::Entity::isClient() const {
     assert(_entity != nullptr);
 
@@ -185,12 +192,6 @@ bool librg_cpp::Entity::hasVisibility() const {
     assert(_entity != nullptr);
 
     return _entity->flags & (uint64_t) LIBRG_ENTITY_VISIBILITY;
-}
-
-bool librg_cpp::Entity::hasQueried() const {
-    assert(_entity != nullptr);
-
-    return _entity->flags & (uint64_t) LIBRG_ENTITY_QUERIED;
 }
 
 bool librg_cpp::Entity::isControlled() const {
@@ -205,14 +206,11 @@ bool librg_cpp::Entity::isControlRequested() const {
     return _entity->flags & (uint64_t) LIBRG_ENTITY_CONTROL_REQUESTED;
 }
 
-bool librg_cpp::Entity::isMarkedRemoval() const {
+void librg_cpp::Entity::destroy() {
     assert(_entity != nullptr);
+    assert(_context != nullptr);
 
-    return _entity->flags & (uint64_t) LIBRG_ENTITY_MARKED_REMOVAL;
-}
+    librg_entity_destroy(&_context->_context, id());
 
-bool librg_cpp::Entity::isUnused() const {
-    assert(_entity != nullptr);
-
-    return _entity->flags & (uint64_t) LIBRG_ENTITY_UNUSED;
+    _entity = nullptr;
 }

@@ -221,7 +221,24 @@ namespace librg_cpp {
         zpl_vec3 minBranchSize() const;
 #endif
 
-        // TODO: Add entity creation method
+        /**
+         * Create an entity with the given type.
+         *
+         * @param type Type of the new entity
+         * @return Created entity.
+         */
+        std::shared_ptr<Entity> createEntity(uint32_t type);
+
+        /**
+         * Destroy an entity.
+         *
+         * @attention Only entities created with createEntity can be destroyed. Client entities can NOT be destroyed.
+         * @attention Entity must not be a null pointer.
+         * @warning Do not use the entity after destroying it.
+         *
+         * @param entity Entity to remove.
+         */
+        bool destroyEntity(const std::shared_ptr<Entity> &entity);
 
         /**
          * Get an entity by it's id.
@@ -312,6 +329,15 @@ namespace librg_cpp {
                 assert(entry != nullptr);
 
                 _entries[value] = entry;
+            }
+
+            void remove(T *value) {
+                assert(value != nullptr);
+
+                auto it = _entries.find(value);
+                assert(it != _entries.end());
+
+                _entries.erase(it);
             }
 
             std::shared_ptr<P> get(T *value) const {

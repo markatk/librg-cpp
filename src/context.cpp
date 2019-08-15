@@ -141,6 +141,31 @@ zpl_vec3 librg_cpp::Context::minBranchSize() const {
 }
 #endif
 
+std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::createEntity(uint32_t type) {
+    assert(_entityPool != nullptr);
+
+    auto entity = std::shared_ptr<Entity>(new Entity(type, shared_from_this()));
+
+    _entityPool->add(entity->_entity, entity);
+
+    return entity;
+}
+
+bool librg_cpp::Context::destroyEntity(const std::shared_ptr<Entity> &entity) {
+    assert(entity != nullptr);
+    assert(_entityPool != nullptr);
+
+    if (entity->_initialized == false) {
+        return false;
+    }
+
+    _entityPool->remove(entity->_entity);
+
+    entity->destroy();
+
+    return true;
+}
+
 std::shared_ptr<librg_cpp::Entity> librg_cpp::Context::getEntity(uint32_t id) {
     auto entity = librg_entity_fetch(&_context, id);
     if (entity == nullptr) {

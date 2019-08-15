@@ -98,6 +98,7 @@ namespace librg_cpp {
          * - LIBRG_EVENT_REJECTABLE = 2
          * - LIBRG_EVENT_REMOTE = 4
          * - LIBRG_EVENT_LOCAL = 8
+         * // TODO: Add event flag documentation
          *
          * @return Flags of the event.
          */
