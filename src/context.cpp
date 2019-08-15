@@ -21,7 +21,6 @@
 #include "context.h"
 
 #include "result.h"
-#include "pool.h"
 #include "peer.h"
 #include "entity.h"
 #include "host.h"

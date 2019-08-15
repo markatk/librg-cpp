@@ -23,15 +23,14 @@
 #include <librg.h>
 #include <memory>
 #include <vector>
+#include <map>
+#include <cassert>
 
 #ifdef LIBRG_CPP_USE_LINALG
 #include <linalg.h>
 #endif
 
 namespace librg_cpp {
-    template<class T, class P>
-    class Pool;
-
     class Peer;
     class Entity;
 
@@ -42,6 +41,10 @@ namespace librg_cpp {
      */
     class Context : private std::enable_shared_from_this<Context> {
     private:
+        // Declare internal pool class
+        template<class T, class P>
+        class Pool;
+
         librg_ctx _context;
         bool _initialized;
 
@@ -218,6 +221,8 @@ namespace librg_cpp {
         zpl_vec3 minBranchSize() const;
 #endif
 
+        // TODO: Add entity creation method
+
         /**
          * Get an entity by it's id.
          *
@@ -292,5 +297,32 @@ namespace librg_cpp {
         friend class Entity;
         friend class Event;
         friend class Message;
+
+        template<class T, class P>
+        class Pool {
+        private:
+            std::map<T *, std::shared_ptr<P>> _entries;
+
+        public:
+            Pool() = default;
+            virtual ~Pool() = default;
+
+            void add(T *value, const std::shared_ptr<P> &entry) {
+                assert(value != nullptr);
+                assert(entry != nullptr);
+
+                _entries[value] = entry;
+            }
+
+            std::shared_ptr<P> get(T *value) const {
+                assert(value != nullptr);
+
+                try {
+                    return _entries.at(value);
+                } catch (std::out_of_range &) {
+                    return nullptr;
+                }
+            }
+        };
     };
 }
