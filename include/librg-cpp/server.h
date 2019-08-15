@@ -34,7 +34,7 @@ namespace librg_cpp {
      *
      * In most cases create a subclass and overwrite existing event methods of this to handle incoming network events.
      */
-    class Server : public Host {
+    class Server : protected Host {
     public:
         /**
          * Create a new network server.
@@ -69,6 +69,20 @@ namespace librg_cpp {
          * If the server is not running, nothing happens.
          */
         void stop();
+
+        /**
+         * Check if the server was started.
+         *
+         * @return True if the server was successful started, otherwise false.
+         */
+        bool isStarted() const;
+
+        /**
+         * Update server and receive and send network packets.
+         *
+         * @attention This method must be called periodically, otherwise the server will not function.
+         */
+        void tick() override;
 
         /**
          * Kick a client.

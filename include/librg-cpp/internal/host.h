@@ -34,9 +34,8 @@ namespace librg_cpp {
     class Peer;
     class Entity;
 
-    // TODO: Make host abstract and use as protected in subclasses
     class Host {
-    protected:
+    public:
         std::shared_ptr<Context> _context;
         librg_address _address;
         char _host[MAX_HOST_LENGTH + 1];
@@ -49,11 +48,10 @@ namespace librg_cpp {
         explicit Host(std::shared_ptr<Context> context);
         virtual ~Host() = default;
 
-        void tick();
+        virtual void tick();
 
-        bool isConnected() const;
+        virtual bool isConnected() const;
 
-    protected:
         virtual void sendMessage(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size);
         virtual void sendMessageToAll(uint16_t id, void *data, size_t size);
         virtual void sendMessageExcept(uint16_t id, const std::shared_ptr<Peer> &peer, void *data, size_t size);

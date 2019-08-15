@@ -68,6 +68,14 @@ void librg_cpp::Server::stop() {
     librg_network_stop(context());
 }
 
+bool librg_cpp::Server::isStarted() const {
+    return Host::isConnected();
+}
+
+void librg_cpp::Server::tick() {
+    Host::tick();
+}
+
 void librg_cpp::Server::kick(const std::shared_ptr<Peer> &peer) {
     assert(_context != nullptr);
     assert(peer != nullptr);

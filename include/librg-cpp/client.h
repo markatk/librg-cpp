@@ -32,7 +32,7 @@ namespace librg_cpp {
      *
      * In most cases create a subclass and overwrite existing event methods of this to handle incoming network events.
      */
-    class Client : public Host {
+    class Client : protected Host {
     public:
         /**
          * Create a new network client.
@@ -68,6 +68,20 @@ namespace librg_cpp {
          * If there is no connection, nothing happens.
          */
         void disconnect();
+
+        /**
+         * Check if the client is connected to any server.
+         *
+         * @return True if the client has a connection, otherwise false.
+         */
+        bool isConnected() const override;
+
+        /**
+         * Update client and receive and send network packets.
+         *
+         * @attention This method must be called periodically, otherwise the client will not function.
+         */
+        void tick() override;
 
         /**
          * Send a message to the server.

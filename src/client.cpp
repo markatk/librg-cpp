@@ -79,6 +79,14 @@ void librg_cpp::Client::disconnect() {
     librg_network_stop(context());
 }
 
+bool librg_cpp::Client::isConnected() const {
+    return Host::isConnected();
+}
+
+void librg_cpp::Client::tick() {
+    Host::tick();
+}
+
 void librg_cpp::Client::sendMessage(uint16_t id, void *data, size_t size) {
     assert(data != nullptr);
 

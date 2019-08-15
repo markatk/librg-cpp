@@ -28,6 +28,11 @@
     TYPE read ## NAME ## At (size_t position)
 
 namespace librg_cpp {
+    /**
+     * Data serialization class.
+     *
+     * Use this class to use the librg (de-)serialization for events and messages.
+     */
     class Data {
     private:
         librg_data *_data;
