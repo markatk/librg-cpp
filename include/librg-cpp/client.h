@@ -20,7 +20,7 @@
 
 #pragma once
 
-#include "host.h"
+#include "internal/host.h"
 
 #include <string>
 

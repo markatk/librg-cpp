@@ -18,7 +18,7 @@
  * limitations under the License.
  */
 
-#include "host.h"
+#include "internal/host.h"
 
 #include "context.h"
 #include "event.h"

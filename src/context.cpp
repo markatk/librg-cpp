@@ -23,7 +23,7 @@
 #include "result.h"
 #include "peer.h"
 #include "entity.h"
-#include "host.h"
+#include "internal/host.h"
 
 #include <cassert>
 
