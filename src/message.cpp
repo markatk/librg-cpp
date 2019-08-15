@@ -31,7 +31,7 @@ librg_cpp::Message::Message(librg_message *message, const std::shared_ptr<Contex
 
     _message = message;
     _context = context;
-    _data = std::make_shared<Data>(_message->data);
+    _data = std::shared_ptr<Data>(new Data(_message->data));
     _peer = context->getPeer(_message->peer);
 }
 

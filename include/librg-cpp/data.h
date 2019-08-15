@@ -34,13 +34,50 @@ namespace librg_cpp {
         bool _initialized;
 
     public:
+        /**
+         * Create new empty data.
+         */
         Data();
-        explicit Data(librg_data *data);
+
+        /**
+         * Cleanup data.
+         */
         virtual ~Data();
 
+        /**
+         * Write raw data.
+         *
+         * @param pointer Pointer to the raw data.
+         * @param size Size in bytes of the raw data.
+         */
         void writePointer(void *pointer, size_t size);
+
+        /**
+         * Write raw data at given position.
+         *
+         * @param pointer Pointer to the raw data.
+         * @param size Size in bytes of the raw data.
+         * @param position Position to write the raw data at.
+         */
         void writePointerAt(void *pointer, size_t size, size_t position);
+
+        /**
+         * Read raw data.
+         *
+         * @param pointer Pointer to fill the raw data in.
+         * @param size Size in bytes to read.
+         * @return True if the amount of bytes could be read, otherwise false.
+         */
         bool readPointer(void *pointer, size_t size);
+
+        /**
+         * Read raw data.
+         *
+         * @param pointer Pointer to fill the raw data in.
+         * @param size Size in bytes to read.
+         * @param position Position to read the raw data at.
+         * @return True if the amount of bytes could be read, otherwise false.
+         */
         bool readPointerAt(void *pointer, size_t size, size_t position);
 
         DECL_DATA_METHODS(Int8, int8_t);
@@ -55,16 +92,72 @@ namespace librg_cpp {
         DECL_DATA_METHODS(Double, double);
         DECL_DATA_METHODS(Bool, bool);
 
+        /**
+         * Reset the data.
+         *
+         * This clears every data written to and resets both read and write positions.
+         */
         void reset();
-        void grow(size_t minSize);
-        void free();
 
+        /**
+         * Grow the data to the given minimum size.
+         *
+         * @param minSize Minimum size to grow the data to.
+         */
+        void grow(size_t minSize);
+
+        /**
+         * Get the raw address of the data.
+         *
+         * @warning Use this with care and do not write at it at all.
+         *
+         * @return Raw address pointer of the data.
+         */
         void *raw() const;
 
+        /**
+         * Set the write position of the data.
+         *
+         * @param position Write position of the data.
+         */
         void setWritePosition(size_t position);
+
+        /**
+         * Set the read position of the data.
+         *
+         * @param position Read position of the data.
+         */
         void setReadPosition(size_t position);
+
+        /**
+         * Get the write position of the data.
+         *
+         * @return Write position of the data.
+         */
         size_t writePosition() const;
+
+        /**
+         * Get the read position of the data.
+         *
+         * @return Read position of the data.
+         */
         size_t readPosition() const;
+
+        /**
+         * Get the capacity of the data.
+         *
+         * The capacity is the actual amount if written bytes to the data.
+         *
+         * @return Number of bytes written to the data.
+         */
         size_t capacity() const;
+
+    private:
+        explicit Data(librg_data *data);
+
+        void free();
+
+        friend class Event;
+        friend class Message;
     };
 }

@@ -31,7 +31,7 @@ librg_cpp::Event::Event(librg_event *event, const std::shared_ptr<Context> &cont
 
     _event = event;
     _context = context;
-    _data = std::make_shared<Data>(_event->data);
+    _data = std::shared_ptr<Data>(new Data(_event->data));
     _entity = context->getEntity(_event->entity);
 
     if (_event->peer != nullptr) {
