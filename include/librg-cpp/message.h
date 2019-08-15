@@ -28,6 +28,11 @@ namespace librg_cpp {
     class Data;
     class Peer;
 
+    /**
+     * A single message send between server and client.
+     *
+     * Messages are custom events defined by the user. For librg events use see the event class.
+     */
     class Message {
     private:
         librg_message *_message;
@@ -36,14 +41,58 @@ namespace librg_cpp {
         std::shared_ptr<Peer> _peer;
 
     public:
+        /**
+         * Cleanup message.
+         */
         virtual ~Message() = default;
 
+        /**
+         * Get identifier of the message.
+         *
+         * Message identifiers are expected to be LIBRG_EVENT_LAST or higher.
+         *
+         * @return Identifier of the message.
+         */
         uint32_t id() const;
+
+        /**
+         * Get the context used by the message.
+         *
+         * For more information see context tutorial.
+         * // TODO: Add context tutorial
+         *
+         * @return Context used by the message.
+         */
         std::shared_ptr<Context> context() const;
+
+        /**
+         * Get data of the message.
+         *
+         * @return Data of the message.
+         */
         std::shared_ptr<Data> data() const;
+
+        /**
+         * Get the peer of the message.
+         *
+         * The peer identifies who send the message. On server side it can be used to identify the client, on client side this is always the server.
+         *
+         * @return Peer of the message.
+         */
         std::shared_ptr<Peer> peer() const;
 
+        /**
+         * Set a custom user data.
+         *
+         * @param ptr Pointer to the custom data.
+         */
         void setUserData(void *ptr);
+
+        /**
+         * Get the custom user data.
+         *
+         * @return Pointer of the custom data.
+         */
         void *userData() const;
 
     private:

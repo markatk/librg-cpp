@@ -73,10 +73,11 @@ namespace librg_cpp {
          * Send a message to the server.
          *
          * Use this method if you do your own serialization.
+         * // TODO: Add message tutorial
          *
          * @param id Identifier of the message.
          * @param data Raw data of the message.
-         * @param size Size in bytes of the message.
+         * @param size Size in bytes of the data.
          */
         void sendMessage(uint16_t id, void *data, size_t size);
 
@@ -84,6 +85,7 @@ namespace librg_cpp {
          * Send a message to the server.
          *
          * Use this method if you want to use the librg serialization.
+         * // TODO: Add message tutorial
          *
          * @param id Identifier of the message.
          * @param data Data of the message.

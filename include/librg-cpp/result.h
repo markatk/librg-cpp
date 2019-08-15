@@ -20,6 +20,8 @@
 
 #pragma once
 
+// TODO: Change result into enum?
+// TODO: Document results
 #define LIBRG_CPP_NO_ERROR                      0
 #define LIBRG_CPP_UNKNOWN_ERROR                 1
 #define LIBRG_CPP_CONTEXT_UNINITIALIZED         2
