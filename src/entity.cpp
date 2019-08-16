@@ -94,6 +94,18 @@ zpl_vec3 librg_cpp::Entity::position() const {
 }
 #endif
 
+void librg_cpp::Entity::setStreamRange(float range) {
+    assert(_entity != nullptr);
+
+    _entity->stream_range = range;
+}
+
+float librg_cpp::Entity::streamRange() const {
+    assert(_entity != nullptr);
+
+    return _entity->stream_range;
+}
+
 void librg_cpp::Entity::setControlPeer(const std::shared_ptr<Peer> &peer) {
     assert(_entity != nullptr);
     assert(peer != nullptr);

@@ -117,6 +117,24 @@ namespace librg_cpp {
 #endif
 
         /**
+         * Set streaming range of the entity.
+         *
+         * The streaming range determines how far other entities can see this entity.
+         *
+         * @param range Stream range of the entity.
+         */
+        void setStreamRange(float range);
+
+        /**
+         * Get the streaming range of the entity.
+         *
+         * The streaming range determines how far other entities can see this entity.
+         *
+         * @return Stream range of the entity.
+         */
+        float streamRange() const;
+
+        /**
          * Set a peer to control the entity.
          *
          * The peer is responsible for synchronizing the entity instead of the server. For more information see client synchronization tutorial.
