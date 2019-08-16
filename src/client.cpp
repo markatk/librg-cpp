@@ -29,7 +29,7 @@
 #include <cassert>
 
 librg_cpp::Client::Client(std::shared_ptr<Context> context) : librg_cpp::Host(std::move(context)) {
-    assert(context->isServer() == false);
+    assert(_context->isServer() == false);
 }
 
 librg_cpp::Client::~Client() {
