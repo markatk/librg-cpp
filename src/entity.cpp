@@ -225,4 +225,5 @@ void librg_cpp::Entity::destroy() {
     librg_entity_destroy(&_context->_context, id());
 
     _entity = nullptr;
+    _initialized = false;
 }
