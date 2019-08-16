@@ -20,6 +20,16 @@ The documentation is build with CMake and will be located in docs/html when buil
 
 Examples needs to be added.
 
+## Testing
+
+Testing is done on multiple platforms with multiple compilers.
+
+| Operating System | Compiler                                |
+|------------------|-----------------------------------------|
+| Windows          | msvc (appveyor), gcc and clang (travis) |
+| Linux            | gcc and clang (travis)                  |
+| macOS            | gcc and clang (travis)                  |
+
 ## License
 
 Copyright 2019 MarkAtk
