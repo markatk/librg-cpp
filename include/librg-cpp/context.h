@@ -39,7 +39,7 @@ namespace librg_cpp {
      * 
      * This class is the main library context used by all classes.
      */
-    class Context : private std::enable_shared_from_this<Context> {
+    class Context : public std::enable_shared_from_this<Context> {
     private:
         // Declare internal pool class
         template<class T, class P>
