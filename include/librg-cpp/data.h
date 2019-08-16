@@ -22,15 +22,6 @@
 
 #include <librg.h>
 
-#define DECL_DATA_METHODS(NAME, TYPE) /** Write TYPE to the data. @param value Value to write to the data. */ \
-    void write ## NAME (TYPE value); \
-    /** Write TYPE to the data at given position. @param value Value to write to the data. @param position Position to write the data at. */ \
-    void write ## NAME ## At(TYPE value, size_t position); \
-    /** Read TYPE from the data. */ \
-    TYPE read ## NAME (); \
-    /** Read TYPE from the data at the given position. @param position Position to read the data at. */ \
-    TYPE read ## NAME ## At (size_t position)
-
 namespace librg_cpp {
     /**
      * Data serialization class.
@@ -54,52 +45,58 @@ namespace librg_cpp {
         virtual ~Data();
 
         /**
-         * Write raw data.
+         * Write data.
          *
-         * @param pointer Pointer to the raw data.
-         * @param size Size in bytes of the raw data.
+         * @param value Value to write to the data.
          */
-        void writePointer(void *pointer, size_t size);
+        template<typename T>
+        void write(T &&value) {
+            librg_data_wptr(_data, &value, sizeof(value));
+        }
 
         /**
-         * Write raw data at given position.
+         * Write data at given position.
          *
-         * @param pointer Pointer to the raw data.
-         * @param size Size in bytes of the raw data.
-         * @param position Position to write the raw data at.
+         * @param value Value to write to the data.
+         * @param position Position to write the data at.
          */
-        void writePointerAt(void *pointer, size_t size, size_t position);
+        template<typename T>
+        void writeAt(T &&value, size_t position) {
+            librg_data_wptr_at(_data, &value, sizeof(value), position);
+        }
 
         /**
-         * Read raw data.
+         * Read data.
          *
-         * @param pointer Pointer to fill the raw data in.
-         * @param size Size in bytes to read.
-         * @return True if the amount of bytes could be read, otherwise false.
+         * @attention If the data has not enough bytes left to read from, the default value will be returned.
+         *
+         * @return Value read from the data.
          */
-        bool readPointer(void *pointer, size_t size);
+        template<typename T>
+        T read() {
+            T value;
+
+            librg_data_rptr(_data, &value, sizeof(value));
+
+            return value;
+        }
 
         /**
-         * Read raw data.
+         * Read data at given position.
          *
-         * @param pointer Pointer to fill the raw data in.
-         * @param size Size in bytes to read.
-         * @param position Position to read the raw data at.
-         * @return True if the amount of bytes could be read, otherwise false.
+         * @attention If the data has not enough bytes left to read from, the default value will be returned.
+         *
+         * @param position Position to read the data at.
+         * @return Value read from the data.
          */
-        bool readPointerAt(void *pointer, size_t size, size_t position);
+        template<typename T>
+        T readAt(size_t position) {
+            T value;
 
-        DECL_DATA_METHODS(Int8, int8_t);
-        DECL_DATA_METHODS(UInt8, uint8_t);
-        DECL_DATA_METHODS(Int16, int16_t);
-        DECL_DATA_METHODS(UInt16, uint16_t);
-        DECL_DATA_METHODS(Int32, int32_t);
-        DECL_DATA_METHODS(UInt32, uint32_t);
-        DECL_DATA_METHODS(Int64, int64_t);
-        DECL_DATA_METHODS(UInt64, uint64_t);
-        DECL_DATA_METHODS(Float, float);
-        DECL_DATA_METHODS(Double, double);
-        DECL_DATA_METHODS(Bool, bool);
+            librg_data_rptr_at(_data, &value, sizeof(value), position);
+
+            return value;
+        }
 
         /**
          * Reset the data.

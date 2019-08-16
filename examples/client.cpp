@@ -49,7 +49,7 @@ protected:
     void onConnectionRequest(const std::unique_ptr<librg_cpp::Event> &event) override {
         std::cout << "Connection requested" << std::endl;
 
-        event->data()->writeInt64(128);
+        event->data()->write<int64_t>(128);
     }
 
     void onConnectionAccept(const std::unique_ptr<librg_cpp::Event> &event) override {
@@ -91,6 +91,8 @@ int main(int argc, char **argv) {
 
         return EXIT_FAILURE;
     }
+
+    std::cout << "Client connecting..." << std::endl;
 
     while (client.isShutdown() == false) {
         client.tick();

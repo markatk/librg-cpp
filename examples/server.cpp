@@ -32,7 +32,7 @@ public:
 
 protected:
     void onConnectionRequest(const std::unique_ptr<librg_cpp::Event> &event) override {
-        std::cout << "Connection requested: " << event->data()->readInt64() << std::endl;
+        std::cout << "Connection requested: " << event->data()->read<int64_t>() << std::endl;
     }
 
     void onConnectionAccept(const std::unique_ptr<librg_cpp::Event> &event) override {
@@ -60,6 +60,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
+    // Port is set in the constructor
     Server server(context);
 
     if (server.start() != LIBRG_CPP_NO_ERROR) {
@@ -67,6 +68,8 @@ int main(int argc, char **argv) {
 
         return EXIT_FAILURE;
     }
+
+    std::cout << "Server started" << std::endl;
 
     while (true) {
         server.tick();
