@@ -102,11 +102,15 @@ namespace librg_cpp {
          * Reset the data.
          *
          * This clears every data written to and resets both read and write positions.
+         *
+         * @attention The capacity is NOT changed.
          */
         void reset();
 
         /**
          * Grow the data to the given minimum size.
+         *
+         * The actual size may be greater than given minimum size.
          *
          * @param minSize Minimum size to grow the data to.
          */
@@ -152,9 +156,9 @@ namespace librg_cpp {
         /**
          * Get the capacity of the data.
          *
-         * The capacity is the actual amount if written bytes to the data.
+         * @attention The capacity is NOT the amount of bytes written bytes to the data.
          *
-         * @return Number of bytes written to the data.
+         * @return Number of bytes reserved for the data.
          */
         size_t capacity() const;
 
